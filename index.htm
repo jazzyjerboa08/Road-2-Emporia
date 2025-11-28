@@ -2,148 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Road 2 Emporia — Interactive Election Map</title>
+<title>Road 2 Emporia</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="Predict or alter, future or past!" />
+
+<meta property="og:title" content="Road 2 Emporia — Interactive Election Map">
+<meta property="og:description" content="Interactive provincial election mapper. Assign nominees by region, load past elections (Aug/Sep/Oct 2025), and see projections.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMDI0IDUxMiIgdmVyc2lvbj0iMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNmZmYiLz48ZyBmaWxsPSIjMzA0MDY0Ij48cmVjdCB4PSIzMiIgeT0iMzIiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDQ4IiByeD0iMjQiIGZpbGw9IiMzMDQwNjQiIG9wYWNpdHk9Ii4xIi8+PC9nPjx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LXNpemU9IjQwIiBmb250LWZhbWlseT0iUH9ibm5pcyxzaXN0ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPkJlIHIgMiBFbXBvcmlhPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iMjIwIiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iUH9ibm5pcyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW50ZXJhY3RpdmUgU2ltdWxhdG9yPC90ZXh0Pjwvc3ZnPg==" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Road 2 Emporia — Interactive Election Map" />
+<meta name="twitter:description" content="Interactive provincial election mapper. Assign nominees by region, load past elections (Aug/Sep/Oct 2025), and see projections." />
+<meta name="twitter:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMDI0IDUxMiI+PHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iNTEyIiBmaWxsPSIjMGUwZTllIiByeD0iMCIvPjx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LXNpemU9IjQwIiBmb250LWZhbWlseT0iUH9ibm5pcyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Um9hZCAyIEVtcG9yaWE8L3RleHQ+PC9zdmc+" />
+
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iOSIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjMyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC1mYW1pbHk9IlBvcHBpbnMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPjJFPC90ZXh0Pjwvc3ZnPg==" />
+
 <style>
   :root{
     --panel-width:380px;
     --bg:#eef3f7;
     --card:#ffffff;
     --muted:#7b8a99;
-    --accent: linear-gradient(135deg,#4d6dff 0%, #8000ff 100%);
+    --accent1:#4d6dff;
+    --accent2:#8000ff;
     --default-fill:#999999;
     --safe-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    --glass: rgba(255,255,255,0.65);
   }
 
-  html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue",sans-serif;background:var(--bg);color:#111}
-  .app {display:flex;min-height:100vh;gap:18px;align-items:stretch;padding:18px;box-sizing:border-box}
-  header.topbar{
-    position:fixed;left:0;right:0;top:0;height:76px;display:flex;align-items:center;padding:0 24px;background:linear-gradient(90deg,#ffffffcc, #ffffffaa);backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(12,18,28,0.06);z-index:30;
-  }
-  header .title {font-weight:800;font-size:20px;margin-right:12px}
-  header .subtitle {color:var(--muted);font-size:13px;margin-left:6px}
+  body{font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:var(--bg); color:#111;}
+  body.dark{ --bg:#0b1220; --card:#07101a; --muted:#9aa7b6; color:#e6eef6; }
 
-  #leftPanel {
-    width:var(--panel-width);
-    margin-top:92px;
-    border-radius:12px;
-    background:var(--card);
-    box-shadow:var(--safe-shadow);
-    padding:18px;
-    padding-bottom:40px; 
-    box-sizing:border-box;
-    flex-shrink:0;
-    min-height: calc(100vh - 92px);
-    overflow:auto;
-  }
-  h3 {margin:8px 0 12px 0;font-size:13px;color:#333;font-weight:600}
-  .section {margin-bottom:14px}
-  #palette {display:flex;flex-direction:column;gap:8px}
-  .colorOption{
-    display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;
-    box-shadow:0 8px 18px rgba(0,0,0,0.06);transition:transform .14s ease, box-shadow .14s ease, opacity .14s;
-    user-select:none;
-  }
-  .colorOption .label {font-size:13px;text-shadow:0 1px 2px rgba(0,0,0,0.25)}
-  .colorOption .shade {font-size:12px;opacity:.95}
+  header.topbar{position:fixed;left:0;right:0;top:0;height:76px;display:flex;align-items:center;padding:0 18px;background:linear-gradient(90deg,#ffffffcc,#ffffffaa);backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(12,18,28,0.06);z-index:40}
+  body.dark header.topbar{background:linear-gradient(90deg, rgba(10,12,18,0.8), rgba(10,12,18,0.6)); box-shadow:0 8px 34px rgba(0,0,0,0.6)}
+  header .title{font-weight:800;font-size:20px}
+  header .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+  .app{display:flex;gap:18px;padding:18px;padding-top:110px;box-sizing:border-box;min-height:100vh}
+  #leftPanel{width:var(--panel-width);background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--safe-shadow);padding-bottom:44px;min-height:calc(100vh - 130px);overflow:auto}
+  #mapContainer{flex:1;display:flex;justify-content:center;align-items:center}
+  .mapCard{width:100%;max-width:1200px;border-radius:14px;padding:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 20px 48px rgba(8,12,20,0.08);border:1px solid rgba(10,20,40,0.03)}
+  body.dark .mapCard{background:linear-gradient(180deg,#07101a,#041018);border-color:rgba(255,255,255,0.03)}
+
+  #palette{display:flex;flex-direction:column;gap:8px}
+  .colorOption{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;transition:transform .14s,box-shadow .14s}
+  .colorOption .label{font-size:13px}
+  .colorOption .shade{font-size:12px;opacity:.95}
   .colorOption:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.12)}
-  .colorOption.hidden{display:none;opacity:0;height:0;padding:0;margin:0;border:0}
-  .colorOption.selected{outline:3px solid rgba(255,255,255,0.18);box-shadow:0 18px 36px rgba(0,0,0,0.18)}
+  .colorOption.selected{outline:3px solid rgba(255,255,255,0.12);box-shadow:0 18px 36px rgba(0,0,0,0.18)}
+  .colorOption.hidden{display:none}
 
   .partyRow{display:flex;gap:8px;align-items:center;margin-top:8px}
-  .partyName{min-width:160px;font-weight:700;color:#222} /* wider label */
-  .partyInput{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef6;background:linear-gradient(180deg,#fbfdff,#fbfdff);box-shadow:0 2px 6px rgba(18,24,32,0.04);font-size:14px}
+  .partyName{min-width:160px;font-weight:700}
+  .partyInput{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef6;background:linear-gradient(180deg,#fbfdff,#fbfdff);font-size:14px}
+  body.dark .partyInput{background:linear-gradient(180deg,#07101a,#041018);border-color:rgba(255,255,255,0.04);color:var(--muted)}
 
-  .button{display:inline-block;padding:10px 12px;border-radius:10px;background:#f4f6fb;border:1px solid #e2e8f0;color:#111;font-weight:700;cursor:pointer;margin-top:10px;width:100%;text-align:center}
+  .button{display:block;padding:10px;border-radius:10px;background:#f4f6fb;border:1px solid #e2e8f0;color:#111;font-weight:700;cursor:pointer;margin-top:10px;width:100%;text-align:center}
   .button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(12,20,40,0.06)}
+  body.dark .button{background:#0b1320;border-color:rgba(255,255,255,0.02);color:#e6eef6}
 
-  #resultsBox{margin-top:16px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 8px 24px rgba(12,18,28,0.06);border:1px solid #e6eef6}
-  #winnerText{font-size:15px;font-weight:700}
-  #stateCounts{margin-top:8px;color:var(--muted);font-size:13px}
-  small.mono{font-family:monospace;font-size:12px;color:var(--muted);display:block;margin-top:8px}
+  #resultsBox{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #e6eef6}
+  body.dark #resultsBox{background:linear-gradient(180deg,#071018,#041018);border-color:rgba(255,255,255,0.04)}
 
-  #mapContainer {flex:1;display:flex;align-items:center;justify-content:center;position:relative;margin-top:92px}
-  .mapCard{width:100%;max-width:1200px;border-radius:14px;padding:16px;box-sizing:border-box;background:linear-gradient(180deg,#ffffff, #fbfdff);box-shadow:0 20px 48px rgba(8,12,20,0.08);border:1px solid rgba(10,20,40,0.03)}
-  svg{width:100%;height:auto;display:block;border-radius:8px;overflow:visible}
-  svg path, svg polygon, svg rect, svg circle { transition: fill 300ms cubic-bezier(.2,.9,.4,1), opacity .22s ease; }
+  #hoverLabel{position:fixed;padding:8px 10px;background:rgba(0,0,0,0.95);color:#fff;border-radius:8px;pointer-events:none;font-size:13px;opacity:0;transform:translateY(6px) scale(.98);transition:opacity .18s, transform .18s;z-index:9999}
+  #hoverLabel.visible{opacity:1;transform:none}
 
-  #hoverLabel{position:fixed;padding:8px 10px;background:rgba(0,0,0,0.95);color:#fff;border-radius:8px;pointer-events:none;font-size:13px;opacity:0;transform:translateY(6px) scale(.98);transition:opacity .18s ease, transform .18s cubic-bezier(.2,.9,.4,1);z-index:1000}
-  #hoverLabel.visible{opacity:1;transform:translateY(0) scale(1)}
-
-  .legend{display:flex;gap:12px;margin-top:10px;font-size:13px;color:var(--muted);align-items:center}
+  .legend{display:flex;gap:12px;margin-top:12px}
   .legend .item{display:flex;align-items:center;gap:8px}
-  .dot{width:12px;height:12px;border-radius:4px;box-shadow:0 4px 10px rgba(0,0,0,0.06)}
-  .dot.safe{background:#444444}   /* dark grey */
-  .dot.likely{background:#777777}  /* medium grey */
-  .dot.tilt{background:#bbbbbb}    /* light grey */
+  .dot{width:12px;height:12px;border-radius:4px}
+  .dot.safe{background:#444444}
+  .dot.likely{background:#777777}
+  .dot.tilt{background:#bbbbbb}
 
-  @media (max-width:980px){
-    :root{--panel-width:340px}
-    .app{padding:12px}
-    header.topbar{height:68px;padding:0 12px}
-    #leftPanel{width:320px;margin-top:82px}
-    #mapContainer{margin-top:82px}
-  }
-  @media (max-width:760px){
-    .app{flex-direction:column;padding:12px}
-    #leftPanel{width:100%;order:2;margin-top:12px}
-    #mapContainer{order:1;margin-top:0}
-    header.topbar{position:static;border-bottom:1px solid rgba(0,0,0,0.04)}
+  #loaderOverlay{position:fixed;left:0;top:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.95));display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .35s;backdrop-filter: blur(3px)}
+  body.dark #loaderOverlay{background:linear-gradient(180deg,rgba(3,6,10,0.95),rgba(3,6,10,0.95))}
+  #loaderOverlay.hidden{opacity:0;pointer-events:none}
+  .loaderCard{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px;border-radius:12px;background:var(--card);box-shadow:var(--safe-shadow)}
+
+  .iconBtn{display:inline-flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer;border:1px solid rgba(0,0,0,0.06);background:#fff}
+  body.dark .iconBtn{background:#071018;border-color:rgba(255,255,255,0.04);color:var(--muted)}
+
+  svg path, svg polygon, svg rect, svg circle { transition: fill 300ms cubic-bezier(.2,.9,.4,1), opacity .22s }
+
+  @media (max-width:900px){
+    .app{flex-direction:column;padding:12px;padding-top:120px}
+    #leftPanel{width:100%;min-height:auto}
+    #mapContainer{order:-1;margin-bottom:18px}
   }
 </style>
 </head>
 <body>
-  <header class="topbar">
+  <div id="loaderOverlay" role="status">
+    <div class="loaderCard">
+      <svg width="84" height="84" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" stroke="#e6eef6" stroke-width="12" fill="none" /><path d="M50 10 A40 40 0 0 1 90 50" stroke="#4d6dff" stroke-width="12" stroke-linecap="round" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s" repeatCount="indefinite"/></path></svg>
+      <div style="font-weight:700">Loading Road 2 Emporia…</div>
+    </div>
+  </div>
+
+  <header class="topbar" role="banner">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,#4d6dff,#8000ff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;box-shadow:0 6px 18px rgba(77,109,255,0.22)">R2E</div>
+      <div style="width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px">R2E</div>
       <div>
         <div class="title">Road 2 Emporia</div>
-        <div class="subtitle">Predict future Adizzian elections, or alter previous ones!</div>
+        <div style="font-size:13px;color:var(--muted)">Interactive provincial map — click regions to assign nominees & see projections</div>
       </div>
+    </div>
+
+    <div class="controls" role="toolbar" aria-label="Top controls">
+      <div id="soundBtn" class="iconBtn" title="Toggle sound" role="button" aria-pressed="false">🔊 <span style="font-size:13px;margin-left:4px" id="soundLabel">Sound</span></div>
+      <div id="themeBtn" class="iconBtn" title="Toggle dark mode" role="button" aria-pressed="false">🌓 <span style="font-size:13px;margin-left:4px" id="themeLabel">Dark</span></div>
     </div>
   </header>
 
-  <div class="app" role="main" aria-label="Election map app">
-    <div id="leftPanel" class="panel">
-      <div class="section">
+  <main class="app" role="main" aria-label="Election map app">
+    <aside id="leftPanel" aria-label="Controls panel">
+      <section>
         <h3>Palette</h3>
         <div id="palette" aria-hidden="false"></div>
 
-        <div class="legend" style="margin-top:12px">
-          <div class="item"><div class="dot safe"></div><span>Safe</span></div>
-          <div class="item"><div class="dot likely"></div><span>Likely</span></div>
-          <div class="item"><div class="dot tilt"></div><span>Tilt</span></div>
+        <div class="legend">
+          <div class="item"><div class="dot safe"></div><div style="color:var(--muted)">Safe</div></div>
+          <div class="item"><div class="dot likely"></div><div style="color:var(--muted)">Likely</div></div>
+          <div class="item"><div class="dot tilt"></div><div style="color:var(--muted)">Tilt</div></div>
         </div>
-      </div>
+      </section>
 
-      <div class="section">
+      <section style="margin-top:14px">
         <h3>Party Nominees</h3>
-        <div class="partyRow"><div id="label_blue" class="partyName">BLUE — Nominee</div><input id="nominee_blue" class="partyInput" placeholder="Blue Nominee" /></div>
-        <div class="partyRow"><div id="label_purple" class="partyName">PURPLE — Nominee</div><input id="nominee_purple" class="partyInput" placeholder="Purple Nominee" /></div>
-        <div class="partyRow"><div id="label_red" class="partyName">RED — Nominee</div><input id="nominee_red" class="partyInput" placeholder="Red Nominee" /></div>
-        <div id="yellowRow" class="partyRow"><div id="label_yellow" class="partyName">IND — Nominee</div><input id="nominee_yellow" class="partyInput" placeholder="Nominee" /></div>
-      </div>
+        <div class="partyRow"><div id="label_blue" class="partyName">BLUE Nominee</div><input id="nominee_blue" class="partyInput" placeholder="Blue Nominee" /></div>
+        <div class="partyRow"><div id="label_purple" class="partyName">PURPLE Nominee</div><input id="nominee_purple" class="partyInput" placeholder="Purple Nominee" /></div>
+        <div class="partyRow"><div id="label_red" class="partyName">RED Nominee</div><input id="nominee_red" class="partyInput" placeholder="Red Nominee" /></div>
+        <div id="yellowRow" class="partyRow"><div id="label_yellow" class="partyName">IND Nominee</div><input id="nominee_yellow" class="partyInput" placeholder="Nominee" /></div>
+      </section>
 
-      <div class="section">
+      <section style="margin-top:12px">
         <div class="button" onclick="resetMap()">Reset Map & Nominees</div>
         <div class="button" onclick="loadElection('Aug2025')">Show August 2025</div>
         <div class="button" onclick="loadElection('Sep2025')">Show September 2025</div>
         <div class="button" onclick="loadElection('Oct2025')">Show October 2025</div>
-      </div>
+      </section>
 
-      <div id="resultsBox" class="section">
+      <section id="resultsBox" style="margin-top:12px">
         <div id="winnerText">The ___ are projected to win.<br>The next prime minister will be ___</div>
-        <hr style="margin:8px 0"/>
-        <div id="stateCounts"></div>
-        <small class="mono">Scoring: safe=3, likely=2, tilt=1</small>
-      </div>
-    </div>
+        <hr style="margin:8px 0">
+        <div id="stateCounts" style="color:var(--muted)"></div>
+        <small style="display:block;margin-top:8px;color:var(--muted)">Scoring: safe=3, likely=2, tilt=1</small>
+      </section>
+    </aside>
 
-    <div id="mapContainer">
-      <div class="mapCard">
-       <svg
+    <section id="mapContainer" aria-label="Map container">
+      <div class="mapCard" role="region" aria-label="Map card">
+        <svg
    version="1.1"
    id="svg1"
    width="973"
@@ -287,16 +295,76 @@
        id="Odasa" />
   </g>
 </svg>
+
         </svg>
 
       </div>
 
       <div id="hoverLabel" aria-hidden="true"></div>
-    </div>
-  </div>
+    </section>
+  </main>
 
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
+  const $ = sel => document.querySelector(sel);
+  const paletteDiv = $('#palette');
+  const hoverLabel = $('#hoverLabel');
+  const loader = document.getElementById('loaderOverlay');
+  const soundBtn = document.getElementById('soundBtn');
+  const themeBtn = document.getElementById('themeBtn');
+  const themeLabel = document.getElementById('themeLabel');
+  const soundLabel = document.getElementById('soundLabel');
+
+  let soundEnabled = localStorage.getItem('r2e_sound') === '1';
+  let darkEnabled = localStorage.getItem('r2e_dark') === '1';
+  if(darkEnabled) document.body.classList.add('dark');
+
+  function updateThemeUI(){
+    if(document.body.classList.contains('dark')) { themeLabel.textContent = 'Dark'; themeBtn.setAttribute('aria-pressed','true'); }
+    else { themeLabel.textContent = 'Light'; themeBtn.setAttribute('aria-pressed','false'); }
+  }
+  function updateSoundUI(){ soundBtn.setAttribute('aria-pressed', soundEnabled ? 'true' : 'false'); soundLabel.textContent = soundEnabled ? 'Sound' : 'Muted'; }
+  updateThemeUI(); updateSoundUI();
+
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    darkEnabled = document.body.classList.contains('dark');
+    localStorage.setItem('r2e_dark', darkEnabled ? '1' : '0');
+    updateThemeUI();
+  });
+
+  soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('r2e_sound', soundEnabled ? '1' : '0');
+    updateSoundUI();
+    if(soundEnabled) playTone(880, 0.06);
+  });
+
+  let audioCtx = null;
+  function getAudioCtx(){
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  function playTone(freq=880, time=0.08){
+    if(!soundEnabled) return;
+    try{
+      const ctx = getAudioCtx();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.frequency.value = freq;
+      o.type = 'sine';
+      o.connect(g);
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.001);
+      o.start();
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + time);
+      o.stop(ctx.currentTime + time + 0.02);
+    }catch(e){ /* silent fail on older browsers */ }
+  }
+
+
   const parties = {
     blue:   { safe:"#0033ff", likely:"#4d6dff", tilt:"#99aaff", nomineeInput:"nominee_blue" },
     purple: { safe:"#8000ff", likely:"#a64dff", tilt:"#c299ff", nomineeInput:"nominee_purple" },
@@ -370,16 +438,14 @@ document.addEventListener('DOMContentLoaded', () => {
     "Oct2025": { blue:"Jazzy", purple:"Slurps", red:"Chester", yellow:"" }
   };
 
-  const paletteDiv = document.getElementById('palette');
-  const labelBlue = document.getElementById('label_blue');
-  const labelPurple = document.getElementById('label_purple');
-  const labelRed = document.getElementById('label_red');
-  const labelYellow = document.getElementById('label_yellow');
-  const nomineeBlue = document.getElementById('nominee_blue');
-  const nomineePurple = document.getElementById('nominee_purple');
-  const nomineeRed = document.getElementById('nominee_red');
-  const nomineeYellow = document.getElementById('nominee_yellow');
-  const yellowRow = document.getElementById('yellowRow');
+  const labelBlue = $('#label_blue');
+  const labelPurple = $('#label_purple');
+  const labelRed = $('#label_red');
+  const labelYellow = $('#label_yellow');
+  const nomineeBlue = $('#nominee_blue');
+  const nomineePurple = $('#nominee_purple');
+  const nomineeRed = $('#nominee_red');
+  const nomineeYellow = $('#nominee_yellow');
 
   let selectedColor = null;
   let selectedPaletteEl = null;
@@ -399,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(selectedPaletteEl) selectedPaletteEl.classList.remove('selected');
         btn.classList.add('selected');
         selectedPaletteEl = btn;
+        playTone(1100,0.06);
       });
       paletteDiv.appendChild(btn);
       paletteButtons.push(btn);
@@ -406,37 +473,44 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const svg = document.querySelector('#mapContainer svg');
-  if(!svg){ console.error('No <svg> found inside #mapContainer — paste your exported SVG there.'); return; }
+  if(!svg){ console.error('No <svg> found inside #mapContainer. Paste your exported SVG there.'); }
 
   function normalizeIdText(s){ return String(s||'').replace(/\s+/g,'').replace(/[^a-z0-9]/gi,'').toLowerCase(); }
-  const allIds = Array.from(svg.querySelectorAll('[id]')).map(el => String(el.id).trim()).filter(Boolean);
+  const allIds = svg ? Array.from(svg.querySelectorAll('[id]')).map(el => String(el.id).trim()).filter(Boolean) : [];
   const normalizedToActual = {};
   allIds.forEach(id => normalizedToActual[ normalizeIdText(id) ] = id );
 
   function isAutoId(id){ if(!id) return true; return /^(path|rect|g|layer|image|svg|text)\d+$/i.test(id) || /^svg.*$/i.test(id); }
   const regionIds = new Set();
   allIds.forEach(id => { if(!isAutoId(id)) regionIds.add(id); });
-  if(regionIds.size === 0){ svg.children && Array.from(svg.children).forEach(ch => { if(ch.id && !isAutoId(ch.id)) regionIds.add(ch.id); }); }
+  if(regionIds.size === 0 && svg){
+    svg.children && Array.from(svg.children).forEach(ch => { if(ch.id && !isAutoId(ch.id)) regionIds.add(ch.id); });
+  }
 
   const disableMilitaryIds = new Set(["Military District","MilitaryDistrict","militarydistrict"]);
   disableMilitaryIds.forEach(x => { if(regionIds.has(x)) regionIds.delete(x); });
 
-  svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
-    const eid = String(el.id||'').trim();
-    if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))){
-      el.style.pointerEvents = 'none'; el.style.cursor = 'default'; el.style.fill = defaultFill; return;
-    }
-    if(!el.style.fill && !el.getAttribute('fill')) el.style.fill = defaultFill;
-    el.style.pointerEvents = el.style.pointerEvents || 'visiblePainted';
-    el.style.cursor = 'pointer';
-  });
+  if(svg){
+    svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
+      const eid = String(el.id || '').trim();
+      if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))){
+        el.style.pointerEvents = 'none';
+        el.style.cursor = 'default';
+        el.style.fill = defaultFill;
+        return;
+      }
+      if(!el.style.fill && !el.getAttribute('fill')) el.style.fill = defaultFill;
+      el.style.pointerEvents = el.style.pointerEvents || 'visiblePainted';
+      el.style.cursor = 'pointer';
+    });
+  }
 
   function findRegionElementFromTarget(target){
     if(!target) return null;
     let node = target;
     const root = svg;
     while(node && node !== root && node.nodeType === 1){
-      const id = String(node.id||'').trim();
+      const id = (node.id || '').trim();
       if(id && regionIds.has(id)) return node;
       node = node.parentElement;
     }
@@ -449,61 +523,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if(regionIds.has(providedKey)) return providedKey;
     const norm = normalizeIdText(providedKey);
     if(normalizedToActual[norm]) return normalizedToActual[norm];
-    for(const rid of regionIds){ if(normalizeIdText(rid) === norm) return rid; }
-    return null;
-  }
-
-  let regionState = {};
-  svg.addEventListener('click', (e) => {
-    const clicked = e.target;
-    const regionEl = findRegionElementFromTarget(clicked);
-    if(!regionEl) return;
-    if(!selectedColor) return;
-    const regionId = regionEl.id;
-    if(regionEl.tagName.toLowerCase() === 'g'){
-      regionEl.querySelectorAll('path, polygon, rect, circle').forEach(ch => ch.style.fill = selectedColor);
-    } else {
-      regionEl.style.fill = selectedColor;
+    for(const rid of regionIds){
+      if(normalizeIdText(rid) === norm) return rid;
     }
-    regionState[regionId] = selectedColor;
-    updateResults();
-  });
-
-  const hoverLabel = document.getElementById('hoverLabel');
-  svg.addEventListener('mousemove', (e) => {
-    const hovered = document.elementFromPoint(e.clientX, e.clientY);
-    const regionEl = findRegionElementFromTarget(hovered);
-    if(!regionEl){ hoverLabel.classList.remove('visible'); return; }
-    hoverLabel.classList.add('visible');
-    hoverLabel.textContent = regionEl.id || '(unknown)';
-    const offsetX=12, offsetY=12;
-    let left = e.pageX + offsetX, top = e.pageY + offsetY;
-    const rect = hoverLabel.getBoundingClientRect();
-    if(left + rect.width + 8 > window.innerWidth) left = e.pageX - rect.width - offsetX;
-    if(top + rect.height + 8 > window.innerHeight) top = e.pageY - rect.height - offsetY;
-    hoverLabel.style.left = left + 'px';
-    hoverLabel.style.top = top + 'px';
-  });
-  svg.addEventListener('mouseleave', ()=> hoverLabel.classList.remove('visible'));
-
-  let currentElectionKey = null;
-  function updatePaletteLabelsForElection(electionKey){
-    currentElectionKey = electionKey;
-    const mapping = partyNameMapping[electionKey] || {};
-    paletteButtons.forEach(btn => {
-      const partyKey = btn.dataset.partyKey;
-      const shade = btn.dataset.shade;
-      const abbrev = mapping[partyKey] || partyKey.toUpperCase();
-      if(partyKey === 'yellow' && !mapping.yellow) { btn.classList.add('hidden'); }
-      else { btn.classList.remove('hidden'); btn.querySelector('.label').textContent = abbrev; btn.querySelector('.shade').textContent = capitalize(shade); }
-    });
-
-    labelBlue.textContent = mapping.blue ? `${mapping.blue} Nominee` : 'BLUE Nominee';
-    labelPurple.textContent = mapping.purple ? `${mapping.purple} Nominee` : 'PURPLE Nominee';
-    labelRed.textContent = mapping.red ? `${mapping.red} Nominee` : 'RED Nominee';
-
-    if(mapping.yellow){ yellowRow.style.display = ''; labelYellow.textContent = (mapping.yellow === 'IND' ? 'IND Nominee' : `${mapping.yellow} Nominee`); }
-    else { yellowRow.style.display = 'none'; nomineeYellow.value = ''; }
+    return null;
   }
 
   function hexToPartyShade(hex){
@@ -518,28 +541,102 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
+  let regionState = {}; // regionId -> color
+  if(svg){
+    svg.addEventListener('click', e => {
+      const clicked = e.target;
+      const regionEl = findRegionElementFromTarget(clicked);
+      if(!regionEl) return; // ignore background / layers
+      if(!selectedColor) return; // no chosen color
+      const regionId = regionEl.id;
+      if(regionEl.tagName.toLowerCase() === 'g'){
+        regionEl.querySelectorAll('path, polygon, rect, circle').forEach(ch => ch.style.fill = selectedColor);
+      } else {
+        regionEl.style.fill = selectedColor;
+      }
+      regionState[regionId] = selectedColor;
+      playTone(660, 0.06);
+      updateResults();
+    });
+  }
+
+  if(svg){
+    svg.addEventListener('mousemove', function(e) {
+      const hovered = document.elementFromPoint(e.clientX, e.clientY);
+      const regionEl = findRegionElementFromTarget(hovered);
+      if(!regionEl) { hoverLabel.classList.remove('visible'); hoverLabel.style.display = 'none'; return; }
+      hoverLabel.style.display = 'block';
+      hoverLabel.classList.add('visible');
+      hoverLabel.textContent = regionEl.id || '(unknown)';
+      let left = e.pageX + 12, top = e.pageY + 12;
+      const rect = hoverLabel.getBoundingClientRect();
+      if(left + rect.width > window.innerWidth) left = e.pageX - rect.width - 12;
+      if(top + rect.height > window.innerHeight) top = e.pageY - rect.height - 12;
+      hoverLabel.style.left = left + 'px';
+      hoverLabel.style.top = top + 'px';
+    });
+    svg.addEventListener('mouseleave', function(){ hoverLabel.classList.remove('visible'); hoverLabel.style.display = 'none'; });
+  }
+
+  let currentElectionKey = null;
+  function updatePaletteLabelsForElection(electionKey){
+    currentElectionKey = electionKey;
+    const mapping = partyNameMapping[electionKey] || {};
+    paletteButtons.forEach(btn => {
+      const partyKey = btn.dataset.partyKey; // 'blue','purple','red','yellow'
+      const shade = btn.dataset.shade; // 'safe','likely','tilt'
+      const abbrev = mapping[partyKey] || partyKey.toUpperCase();
+      if(partyKey === 'yellow' && !mapping.yellow){
+        btn.classList.add('hidden');
+      } else {
+        btn.classList.remove('hidden');
+        btn.querySelector('.label').textContent = abbrev;
+        btn.querySelector('.shade').textContent = capitalize(shade);
+      }
+    });
+
+    labelBlue.textContent = mapping.blue ? `${mapping.blue} Nominee` : 'BLUE Nominee';
+    labelPurple.textContent = mapping.purple ? `${mapping.purple} Nominee` : 'PURPLE Nominee';
+    labelRed.textContent = mapping.red ? `${mapping.red} Nominee` : 'RED Nominee';
+
+    if(mapping.yellow){
+      document.getElementById('yellowRow').style.display = '';
+      labelYellow.textContent = mapping.yellow === 'IND' ? 'IND Nominee' : `${mapping.yellow} Nominee`;
+    } else {
+      document.getElementById('yellowRow').style.display = 'none';
+      nomineeYellow.value = '';
+    }
+  }
+
   function updateResults(){
     const totals = { blue:0, purple:0, red:0, yellow:0 };
     const stateCounts = { blue:0, purple:0, red:0, yellow:0 };
 
-    Object.entries(regionState).forEach(([region, color])=>{
+    Object.entries(regionState).forEach(([region, color]) => {
       const ps = hexToPartyShade(color);
-      if(ps){ totals[ps.party] += scores[ps.label]; stateCounts[ps.party] += 1; }
+      if(ps){
+        totals[ps.party] += scores[ps.label];
+        stateCounts[ps.party] += 1;
+      }
     });
 
-    const sorted = Object.entries(totals).sort((a,b)=> b[1]-a[1] || a[0].localeCompare(b[0]));
+    const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
     const winnerKey = (sorted.length && sorted[0][1] > 0) ? sorted[0][0] : null;
     const winnerAbbrev = winnerKey && currentElectionKey ? (partyNameMapping[currentElectionKey] && partyNameMapping[currentElectionKey][winnerKey]) : null;
     const winnerFull = winnerAbbrev ? (fullNameByAbbrev[winnerAbbrev] || winnerAbbrev) : null;
     const nomineeId = winnerKey ? (parties[winnerKey] && parties[winnerKey].nomineeInput) : null;
     const nomineeVal = nomineeId ? (document.getElementById(nomineeId).value || '(unknown)') : '(unknown)';
 
-    document.getElementById('winnerText').innerHTML = winnerFull
-      ? `The ${winnerFull} are projected to win.<br>The next prime minister will be ${nomineeVal}.`
-      : 'No projection yet.';
+    const winnerText = document.getElementById('winnerText');
+    if(winnerFull){
+      winnerText.innerHTML = `The <strong>${winnerFull}</strong> are projected to win.<br>The next Prime Minister will be <strong>${escapeHtml(nomineeVal)}</strong>.`;
+      winnerText.animate([{ transform:'scale(1)' }, { transform:'scale(1.02)' }, { transform:'scale(1)' }], { duration:450, easing:'ease-out' });
+    } else {
+      winnerText.innerHTML = 'No projection yet.';
+    }
 
     let txt = '';
-    Object.entries(totals).forEach(([p,v])=>{
+    Object.entries(totals).forEach(([p,v]) => {
       const displayName = (partyNameMapping[currentElectionKey] && partyNameMapping[currentElectionKey][p]) || p.toUpperCase();
       txt += `<strong>${displayName}</strong>: ${v} pts — ${stateCounts[p] || 0} states<br>`;
     });
@@ -548,23 +645,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.resetMap = function(){
     regionState = {};
-    svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
-      el.style.fill = defaultFill;
-      const eid = (el.id||'').trim();
-      if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))) el.style.pointerEvents = 'none';
-      else el.style.pointerEvents = 'visiblePainted';
-    });
-    nomineeBlue.value = ''; nomineePurple.value = ''; nomineeRed.value = ''; nomineeYellow.value = '';
+    if(svg){
+      svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
+        el.style.fill = defaultFill;
+        const eid = (el.id||'').trim();
+        if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))) el.style.pointerEvents = 'none';
+        else el.style.pointerEvents = 'visiblePainted';
+      });
+    }
+    nomineeBlue.value = '';
+    nomineePurple.value = '';
+    nomineeRed.value = '';
+    nomineeYellow.value = '';
     if(selectedPaletteEl){ selectedPaletteEl.classList.remove('selected'); selectedPaletteEl = null; selectedColor = null; }
+    playTone(440,0.06);
     updateResults();
   };
 
   function applyNomineeDefaults(electionKey){
     const mapping = partyNameMapping[electionKey] || {};
-    labelBlue.textContent = mapping.blue ? `${mapping.blue} Nominee` : 'BLUE Nominee';
-    labelPurple.textContent = mapping.purple ? `${mapping.purple} Nominee` : 'PURPLE Nominee';
-    labelRed.textContent = mapping.red ? `${mapping.red} Nominee` : 'RED Nominee';
-    labelYellow.textContent = mapping.yellow ? (mapping.yellow === 'IND' ? 'IND Nominee' : `${mapping.yellow} Nominee`) : 'Nominee';
+    labelBlue.textContent = mapping.blue ? `${mapping.blue} — Nominee` : 'BLUE — Nominee';
+    labelPurple.textContent = mapping.purple ? `${mapping.purple} — Nominee` : 'PURPLE — Nominee';
+    labelRed.textContent = mapping.red ? `${mapping.red} — Nominee` : 'RED — Nominee';
+    labelYellow.textContent = mapping.yellow ? (mapping.yellow === 'IND' ? 'IND — Nominee' : `${mapping.yellow} — Nominee`) : 'Nominee';
 
     const defaults = leadersByElection[electionKey] || {};
     nomineeBlue.value = defaults.blue || '';
@@ -581,13 +684,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!elections[key]){ console.warn('No election data for', key); return; }
     currentElectionKey = key;
     regionState = {};
+
     updatePaletteLabelsForElection(key);
     applyNomineeDefaults(key);
 
     Object.entries(elections[key]).forEach(([providedKey, colorRef])=>{
       const foundId = resolveRegionKeyToSvgId(providedKey);
       if(!foundId) return;
-      const regionEl = svg.querySelector(`#${CSS.escape(foundId)}`);
+      const regionEl = document.querySelector(`#${CSS.escape(foundId)}`);
       if(!regionEl) return;
       const col = (typeof colorRef === 'string' && colorRef.includes('.')) ? (() => {
         const [p, shade] = colorRef.split('.');
@@ -600,23 +704,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if(col) regionState[foundId] = col;
     });
-
-    if(key === 'Aug2025'){ yellowRow.style.display = 'none'; paletteButtons.forEach(b => { if(b.dataset.partyKey === 'yellow') b.classList.add('hidden'); }); nomineeYellow.value = ''; }
-    else { yellowRow.style.display = ''; paletteButtons.forEach(b => { if(b.dataset.partyKey === 'yellow') b.classList.remove('hidden'); }); }
+    if(key === 'Aug2025'){
+      document.getElementById('yellowRow').style.display = 'none';
+      paletteButtons.forEach(btn => { if(btn.dataset.partyKey === 'yellow') btn.classList.add('hidden'); });
+      nomineeYellow.value = '';
+    } else {
+      document.getElementById('yellowRow').style.display = '';
+      paletteButtons.forEach(btn => { if(btn.dataset.partyKey === 'yellow') btn.classList.remove('hidden'); });
+    }
 
     updateResults();
   };
 
-  // helper
-  function capitalize(s){ return String(s||'').charAt(0).toUpperCase() + String(s||'').slice(1); }
+  setTimeout(() => {
+    loader.classList.add('hidden');
+  }, 750);
+  setTimeout(() => { loader.style.display = 'none'; }, 1200);
 
-  // init: reset and auto-load October
+  function capitalize(s){ return String(s||'').charAt(0).toUpperCase() + String(s||'').slice(1); }
+  function escapeHtml(str){ return String(str).replace(/[&<>"'`]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s])); }
+
   resetMap();
   loadElection('Oct2025');
 
-  // debug handle
-  window.__map_debug = { svg, regionIds:Array.from(regionIds), normalizedToActual, elections, partyNameMapping, leadersByElection };
-  console.log('Map ready. Regions detected:', Array.from(regionIds));
+  window.__map_debug = { regionIds:Array.from(regionIds), normalizedToActual, elections, partyNameMapping, leadersByElection };
+
+  updateThemeUI();
+  updateSoundUI();
 });
 </script>
 </body>
