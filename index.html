@@ -1,137 +1,157 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8" />
 <title>Road 2 Emporia</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Predict or alter, future or past!" />
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<meta property="og:title" content="Road 2 Emporia - Adizzia Election Map">
+<meta property="og:description" content="Predict, alter, future, or past, do whatever!">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMDI0IDUxMiIgdmVyc2lvbj0iMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNmZmYiLz48ZyBmaWxsPSIjMzA0MDY0Ij48cmVjdCB4PSIzMiIgeT0iMzIiIHdpZHRoPSI5NjAiIGhlaWdodD0iNDQ4IiByeD0iMjQiIGZpbGw9IiMzMDQwNjQiIG9wYWNpdHk9Ii4xIi8+PC9nPjx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LXNpemU9IjQwIiBmb250LWZhbWlseT0iUH9ibm5pcyxzaXN0ZW0iIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPkJlIHIgMiBFbXBvcmlhPC90ZXh0Pjx0ZXh0IHg9IjUwJSIgeT0iMjIwIiBmb250LXNpemU9IjI0IiBmb250LWZhbWlseT0iUH9ibm5pcyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+SW50ZXJhY3RpdmUgU2ltdWxhdG9yPC90ZXh0Pjwvc3ZnPg==" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Road 2 Emporia — Interactive Election Map" />
+<meta name="twitter:description" content="Interactive provincial election mapper. Assign nominees by region, load past elections (Aug/Sep/Oct 2025), and see projections." />
+<meta name="twitter:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAyNCIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCAxMDI0IDUxMiI+PHJlY3Qgd2lkdGg9IjEwMjQiIGhlaWdodD0iNTEyIiBmaWxsPSIjMGUwZTllIiByeD0iMCIvPjx0ZXh0IHg9IjUwJSIgeT0iMTUwIiBmb250LXNpemU9IjQwIiBmb250LWZhbWlseT0iUH9ibm5pcyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiI+Um9hZCAyIEVtcG9yaWE8L3RleHQ+PC9zdmc+" />
+
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iOSIgZmlsbD0iI2Y1ZjVmNSIvPjx0ZXh0IHg9IjMyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC1mYW1pbHk9IlBvcHBpbnMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiNmZmYiPjJFPC90ZXh0Pjwvc3ZnPg==" />
 
 <style>
-body{
-    margin:0;
-    font-family:'Inter',sans-serif;
-    background:linear-gradient(135deg,#111827,#1f2937);
-    color:white;
-    display:flex;
-}
+  :root{
+    --panel-width:430px;
+    --bg:#eef3f7;
+    --card:#ffffff;
+    --muted:#7b8a99;
+    --accent1:#4d6dff;
+    --accent2:#8000ff;
+    --default-fill:#999999;
+    --safe-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
 
-#sidebar{
-    width:340px;
-    padding:25px;
-    background:#0f172a;
-    box-shadow:4px 0 25px rgba(0,0,0,0.6);
-    overflow-y:auto;
-}
+  body{font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial; margin:0; background:var(--bg); color:#111;}
+  body.dark{ --bg:#0b1220; --card:#07101a; --muted:#9aa7b6; color:#e6eef6; }
 
-h1{
-    font-family:'Montserrat',sans-serif;
-    font-weight:800;
-    text-align:center;
-    margin-bottom:25px;
-    font-size:28px;
-    letter-spacing:2px;
-}
+  header.topbar{position:fixed;left:0;right:0;top:0;height:76px;display:flex;align-items:center;padding:0 18px;background:linear-gradient(90deg,#ffffffcc,#ffffffaa);backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(12,18,28,0.06);z-index:40}
+  body.dark header.topbar{background:linear-gradient(90deg, rgba(10,12,18,0.8), rgba(10,12,18,0.6)); box-shadow:0 8px 34px rgba(0,0,0,0.6)}
+  header .title{font-weight:800;font-size:20px}
+  header .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
 
-.sectionTitle{
-    font-weight:600;
-    margin-top:25px;
-    margin-bottom:10px;
-    font-size:14px;
-    opacity:.7;
-}
+  .app{display:flex;gap:18px;padding:18px;padding-top:110px;box-sizing:border-box;min-height:100vh}
+  #leftPanel{width:var(--panel-width);background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--safe-shadow);padding-bottom:44px;min-height:calc(100vh - 130px);overflow:auto}
+  #mapContainer{flex:1;display:flex;justify-content:center;align-items:center}
+  .mapCard{width:100%;max-width:1200px;border-radius:14px;padding:12px;background:linear-gradient(180deg,#fff,#fbfdff);box-shadow:0 20px 48px rgba(8,12,20,0.08);border:1px solid rgba(10,20,40,0.03)}
+  body.dark .mapCard{background:linear-gradient(180deg,#07101a,#041018);border-color:rgba(255,255,255,0.03)}
 
-.paletteBtn{
-    padding:8px;
-    margin:4px 0;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:600;
-    text-align:center;
-    color:white;
-}
+  #palette{display:flex;flex-direction:column;gap:8px}
+  .colorOption{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;color:#fff;font-weight:700;cursor:pointer;transition:transform .14s,box-shadow .14s}
+  .colorOption .label{font-size:13px}
+  .colorOption .shade{font-size:12px;opacity:.95}
+  .colorOption:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,0.12)}
+  .colorOption.selected{outline:3px solid rgba(255,255,255,0.12);box-shadow:0 18px 36px rgba(0,0,0,0.18)}
+  .colorOption.hidden{display:none}
 
-input{
-    width:100%;
-    padding:8px;
-    margin:5px 0;
-    border-radius:6px;
-    border:none;
-    font-weight:600;
-}
+  .partyRow{display:flex;gap:8px;align-items:center;margin-top:8px}
+  .partyName{min-width:160px;font-weight:700}
+  .partyInput{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef6;background:linear-gradient(180deg,#fbfdff,#fbfdff);font-size:14px}
+  body.dark .partyInput{background:linear-gradient(180deg,#07101a,#041018);border-color:rgba(255,255,255,0.04);color:var(--muted)}
 
-button{
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    border:none;
-    border-radius:6px;
-    font-weight:600;
-    cursor:pointer;
-    background:#1f2937;
-    color:white;
-}
+  .button{display:block;padding:10px;border-radius:10px;background:#f4f6fb;border:1px solid #e2e8f0;color:#111;font-weight:700;cursor:pointer;margin-top:10px;width:100%;text-align:center}
+  .button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(12,20,40,0.06)}
+  body.dark .button{background:#0b1320;border-color:rgba(255,255,255,0.02);color:#e6eef6}
 
-button:hover{
-    background:#334155;
-}
+  #resultsBox{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #e6eef6}
+  body.dark #resultsBox{background:linear-gradient(180deg,#071018,#041018);border-color:rgba(255,255,255,0.04)}
 
-#mapContainer{
-    flex:1;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-}
+  #hoverLabel{position:fixed;padding:8px 10px;background:rgba(0,0,0,0.95);color:#fff;border-radius:8px;pointer-events:none;font-size:13px;opacity:0;transform:translateY(6px) scale(.98);transition:opacity .18s, transform .18s;z-index:9999}
+  #hoverLabel.visible{opacity:1;transform:none}
 
-svg{
-    width:80%;
-}
+  .legend{display:flex;gap:12px;margin-top:12px}
+  .legend .item{display:flex;align-items:center;gap:8px}
+  .dot{width:12px;height:12px;border-radius:4px}
+  .dot.safe{background:#444444}
+  .dot.likely{background:#777777}
+  .dot.tilt{background:#bbbbbb}
 
-.region{
-    fill:#999;
-    stroke:#222;
-    stroke-width:1;
-    cursor:pointer;
-}
+  #loaderOverlay{position:fixed;left:0;top:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.95));display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .35s;backdrop-filter: blur(3px)}
+  body.dark #loaderOverlay{background:linear-gradient(180deg,rgba(3,6,10,0.95),rgba(3,6,10,0.95))}
+  #loaderOverlay.hidden{opacity:0;pointer-events:none}
+  .loaderCard{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px;border-radius:12px;background:var(--card);box-shadow:var(--safe-shadow)}
 
-.region:hover{
-    opacity:.85;
-}
+  .iconBtn{display:inline-flex;align-items:center;gap:8px;padding:8px;border-radius:8px;cursor:pointer;border:1px solid rgba(0,0,0,0.06);background:#fff}
+  body.dark .iconBtn{background:#071018;border-color:rgba(255,255,255,0.04);color:var(--muted)}
 
-#projection{
-    margin-top:20px;
-    padding:12px;
-    background:#111827;
-    border-radius:6px;
-    font-weight:600;
-}
+  svg path, svg polygon, svg rect, svg circle { transition: fill 300ms cubic-bezier(.2,.9,.4,1), opacity .22s }
+
+  @media (max-width:900px){
+    .app{flex-direction:column;padding:12px;padding-top:120px}
+    #leftPanel{width:100%;min-height:auto}
+    #mapContainer{order:-1;margin-bottom:18px}
+  }
 </style>
 </head>
 <body>
+  <div id="loaderOverlay" role="status">
+    <div class="loaderCard">
+      <svg width="84" height="84" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="40" stroke="#e6eef6" stroke-width="12" fill="none" /><path d="M50 10 A40 40 0 0 1 90 50" stroke="#4d6dff" stroke-width="12" stroke-linecap="round" fill="none"><animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="1s" repeatCount="indefinite"/></path></svg>
+      <div style="font-weight:700">Loading Road 2 Emporia…</div>
+    </div>
+  </div>
 
-<div id="sidebar">
-<h1>Road 2 Emporia</h1>
+  <header class="topbar" role="banner">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px">R2E</div>
+      <div>
+        <div class="title">Road 2 Emporia</div>
+        <div style="font-size:13px;color:var(--muted)">Predict, alter, future, or past, do whatever!</div>
+      </div>
+    </div>
 
-<div class="sectionTitle">Election</div>
-<button onclick="loadElection('aug2025')">August 2025</button>
-<button onclick="loadElection('sep2025')">September 2025</button>
-<button onclick="loadElection('oct2025')">October 2025</button>
-<button onclick="loadElection('nov2025')">November 2025</button>
-<button onclick="loadElection('dec2025')">December 2025</button>
-<button onclick="loadElection('jan2026')">January 2026</button>
-<button onclick="loadElection('feb2026')">February 2026</button>
+    <div class="controls" role="toolbar" aria-label="Top controls">
+      <div id="soundBtn" class="iconBtn" title="Toggle sound" role="button" aria-pressed="false">🔊 <span style="font-size:13px;margin-left:4px" id="soundLabel">Sound</span></div>
+      <div id="themeBtn" class="iconBtn" title="Toggle dark mode" role="button" aria-pressed="false">🌓 <span style="font-size:13px;margin-left:4px" id="themeLabel">Dark</span></div>
+    </div>
+  </header>
 
-<div class="sectionTitle">Palette</div>
-<div id="palette"></div>
+  <main class="app" role="main" aria-label="Election map app">
+    <aside id="leftPanel" aria-label="Controls panel">
+      <section>
+        <h3>Palette</h3>
+        <div id="palette" aria-hidden="false"></div>
 
-<div class="sectionTitle">Nominees</div>
-<div id="nomineeInputs"></div>
+        <div class="legend">
+          <div class="item"><div class="dot safe"></div><div style="color:var(--muted)">Safe</div></div>
+          <div class="item"><div class="dot likely"></div><div style="color:var(--muted)">Likely</div></div>
+          <div class="item"><div class="dot tilt"></div><div style="color:var(--muted)">Tilt</div></div>
+        </div>
+      </section>
 
-<div id="projection"></div>
-</div>
+      <section style="margin-top:14px">
+        <h3>Party Nominees</h3>
+        <div class="partyRow"><div id="label_blue" class="partyName">BLUE Nominee</div><input id="nominee_blue" class="partyInput" placeholder="Blue Nominee" /></div>
+        <div class="partyRow"><div id="label_purple" class="partyName">PURPLE Nominee</div><input id="nominee_purple" class="partyInput" placeholder="Purple Nominee" /></div>
+        <div class="partyRow"><div id="label_red" class="partyName">RED Nominee</div><input id="nominee_red" class="partyInput" placeholder="Red Nominee" /></div>
+        <div id="yellowRow" class="partyRow"><div id="label_yellow" class="partyName">IND Nominee</div><input id="nominee_yellow" class="partyInput" placeholder="Nominee" /></div>
+      </section>
 
-<div id="mapContainer">
-<div class="mapCard" role="region" aria-label="Map card">
+      <section style="margin-top:12px">
+        <div class="button" onclick="resetMap()">Reset Map & Nominees</div>
+        <div class="button" onclick="loadElection('Aug2025')">Show August 2025</div>
+        <div class="button" onclick="loadElection('Sep2025')">Show September 2025</div>
+        <div class="button" onclick="loadElection('Oct2025')">Show October 2025</div>
+        <div class="button" onclick="loadElection('Nov2025')">Show November 2025</div>
+      </section>
+
+      <section id="resultsBox" style="margin-top:12px">
+        <div id="winnerText">The ___ are projected to win.<br>The next prime minister will be ___</div>
+        <hr style="margin:8px 0">
+        <div id="stateCounts" style="color:var(--muted)"></div>
+        <small style="display:block;margin-top:8px;color:var(--muted)">Scoring: safe=3, likely=2, tilt=1</small>
+      </section>
+    </aside>
+
+    <section id="mapContainer" aria-label="Map container">
+      <div class="mapCard" role="region" aria-label="Map card">
         <svg
    version="1.1"
    id="svg1"
@@ -274,209 +294,568 @@ svg{
        style="fill:#999999;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        d="m 447.99341,907.7017 c -6.90544,-1.7368 -15.54229,-8.40764 -15.54229,-12.00439 0,-3.36111 -2.20556,-4.52873 -10.69802,-5.66353 -5.76658,-0.77056 -8.99441,-0.72895 -12.46565,0.1607 -4.05335,1.03885 -5.0337,0.97148 -7.27983,-0.50024 -3.4094,-2.23392 -10.82459,-1.48129 -13.90349,1.41118 -1.75065,1.64465 -3.00705,1.96056 -5.91836,1.48812 -2.46331,-0.39974 -4.45277,-0.1046 -5.96529,0.88495 -1.24815,0.81659 -4.87443,1.70003 -8.0584,1.96321 -5.27002,0.43559 -6.25321,0.17945 -10.96628,-2.85702 -2.84748,-1.83453 -5.75491,-3.33551 -6.46096,-3.33551 -1.56781,0 -1.66186,-2.42493 -0.19998,-5.15646 1.55687,-2.90905 -0.4885,-7.20403 -5.2125,-10.94551 -2.12918,-1.68635 -3.87124,-3.66701 -3.87124,-4.40147 0,-0.73446 -2.25,-3.79724 -5,-6.80618 -2.75,-3.00894 -5,-6.09507 -5,-6.85808 0,-4.95563 -6.5296,-7.49272 -11.28519,-4.38489 -1.21815,0.79607 -4.17928,1.56212 -6.58029,1.70232 -4.77922,0.27908 -7.13452,-1.60873 -7.13452,-5.71841 0,-1.20253 -0.72066,-2.78452 -1.60147,-3.51553 -0.88081,-0.731 -3.12522,-3.7111 -4.98758,-6.62244 -1.86236,-2.91134 -4.0667,-5.29335 -4.89853,-5.29335 -1.9,0 -1.89164,-1.91453 0.0194,-4.44113 2.16312,-2.85989 1.79612,-5.04541 -1.10826,-6.59978 -2.09701,-1.12229 -2.45118,-1.85156 -1.90324,-3.91898 1.00001,-3.77319 0.90039,-7.14603 -0.32024,-10.84251 -1.66008,-5.02724 0.82724,-5.13684 6.57561,-0.28974 2.66917,2.25068 5.59811,4.09214 6.50874,4.09214 0.91064,0 2.65381,-1.35 3.87371,-3 1.31595,-1.77991 3.12873,-3 4.45735,-3 1.23165,0 3.13944,-1.14425 4.23953,-2.54279 1.80707,-2.29731 2.58466,-2.51453 8.05459,-2.25 3.67849,0.17789 6.2454,0.78333 6.54104,1.54279 0.26844,0.6896 2.18189,1.25687 4.26798,1.26532 2.07976,0.008 4.27998,0.34592 4.88938,0.75 1.2599,0.83541 5.39201,9.83754 5.39201,11.74692 0,0.6919 2.08011,3.7847 4.62247,6.87288 5.08687,6.17897 7.47248,6.86515 15.50296,4.45916 3.2499,-0.9737 4.48264,-0.87382 7.82662,0.63411 2.81837,1.2709 5.13957,1.60267 8.00605,1.1443 3.33064,-0.53259 5.02418,-0.11867 9.68016,2.3659 3.75578,2.00419 7.07876,3.01141 9.93512,3.01141 5.09689,0 5.69215,-1.09956 5.27019,-9.73503 -0.32218,-6.59358 0.3744,-8.25821 3.46544,-8.28142 1.20504,-0.009 3.99099,-1.04855 6.19099,-2.31 3.44346,-1.97445 3.9791,-2.7409 3.84981,-5.50875 -0.0977,-2.09069 -1.47838,-4.83608 -3.94774,-7.8496 -3.19954,-3.90462 -3.86259,-5.5336 -4.21058,-10.34456 -0.38162,-5.27587 -0.20972,-5.85316 2.26019,-7.5904 6.79386,-4.77854 8.89319,-7.10483 11.62013,-12.8764 3.18506,-6.74121 3.54137,-10.18304 1.77878,-17.18289 -0.88281,-3.50597 -1.92653,-5.02321 -4.5,-6.5416 -2.02497,-1.19476 -3.35059,-2.76818 -3.35059,-3.97691 0,-1.10001 -1.35,-3.2611 -3,-4.80244 -1.65,-1.54133 -3,-3.52408 -3,-4.40611 0,-0.88203 -1.122,-3.92949 -2.49334,-6.77212 -1.37133,-2.84264 -2.30973,-5.35203 -2.08533,-5.57643 0.2244,-0.2244 -0.6786,-2.0092 -2.00667,-3.96622 -4.03098,-5.93999 -3.19107,-8.12862 3.55137,-9.25408 l 3.53397,-0.58989 -0.11497,-7.61858 c -0.10704,-7.09355 0.048,-7.69285 2.25,-8.69614 1.30073,-0.59265 2.36497,-1.60041 2.36497,-2.23946 0,-3.14395 4.63658,-10.12011 7.52953,-11.32886 4.19227,-1.75164 9.47047,-8.57993 9.47047,-12.25173 0,-1.6015 -1.07733,-4.37205 -2.39406,-6.15678 -1.31673,-1.78473 -2.68873,-5.21001 -3.0489,-7.61174 -0.36193,-2.41354 -1.9964,-6.21874 -3.65412,-8.50716 -2.61798,-3.61402 -2.96137,-4.85089 -2.7011,-9.72903 0.19813,-3.71346 0.80148,-5.85307 1.79818,-6.37671 0.825,-0.43344 5.54748,-1.15502 10.4944,-1.60351 8.55782,-0.77586 9.06012,-0.95335 10.34817,-3.65641 1.03243,-2.16663 1.85244,-2.71055 3.45476,-2.29153 1.22522,0.3204 3.50287,-0.31697 5.46407,-1.52906 l 3.36306,-2.07849 0.5544,2.12002 c 0.6477,2.47683 2.55321,2.75024 4.32114,0.62002 0.68468,-0.825 2.65228,-1.50614 4.37244,-1.51365 5.41914,-0.0237 7.84154,-1.06008 7.30179,-3.12406 -0.4046,-1.54722 0.0893,-1.86229 2.91939,-1.86229 2.30567,0 3.44677,-0.48469 3.53138,-1.5 0.0687,-0.825 0.2375,-1.95 0.375,-2.5 0.1375,-0.55 0.30625,-1.66375 0.375,-2.475 0.18858,-2.22528 6.04182,-0.80292 9.35287,2.2728 2.04108,1.89601 4.13347,2.65055 8.31077,2.99697 4.92652,0.40854 5.89907,0.16791 8.27213,-2.04676 3.39333,-3.16684 5.14979,-2.85508 9.89029,1.75544 3.43411,3.33996 4.20647,3.64911 8.04255,3.21922 2.44638,-0.27415 5.70037,-1.58667 7.68328,-3.09911 2.66029,-2.0291 4.58123,-2.62356 8.47779,-2.62356 4.84106,0 5.07176,0.12713 5.89771,3.25 0.95258,3.60166 1.79582,3.75093 9.00629,1.59424 5.93638,-1.7756 9.55859,0.14558 9.99353,5.30046 0.22498,2.66645 0.92779,3.86689 2.75,4.69714 1.78095,0.81146 2.44779,1.90822 2.44779,4.02594 0,3.32873 2.36435,6.65299 6,8.43594 1.375,0.67431 3.625,3.35553 5,5.95826 l 2.5,4.73224 13.62755,0.003 c 10.89086,0.002 13.87756,0.30413 14.87245,1.50289 1.76697,2.12908 7.28046,1.85709 11.37941,-0.56135 3.25882,-1.92275 4.05269,-1.98386 11.80716,-0.90889 12.10225,1.67769 16.81343,3.09732 16.81343,5.06644 0,0.91275 -0.675,3.27506 -1.5,5.24956 -2.05248,4.91227 -1.88102,8.90892 0.5,11.65424 1.1,1.26832 2,3.64655 2,5.28498 0,3.70426 2.90998,8.53302 6.93616,11.50971 2.67504,1.97774 3.06384,2.87162 3.06384,7.04412 0,5.75708 0.47527,6.38587 9.93173,13.13991 8.54219,6.10104 14.63694,7.62659 18.06714,4.5223 1.81521,-1.64274 2.12188,-1.65191 4.44032,-0.13281 3.8919,2.55007 12.22073,2.13896 17.06081,-0.84212 7.69223,-4.73778 23.79192,-2.2751 24.70096,3.77837 0.33319,2.21874 1.90044,3.27932 6.19368,4.19134 2.17362,0.46175 2.60953,0.90003 1.75,1.75956 -1.73984,1.73984 -1.37223,5.1856 0.85536,8.01752 2.3586,2.99847 2.45903,4.53613 0.46819,7.16825 -1.09874,1.45267 -1.46819,4.91713 -1.46819,13.76769 v 11.82655 l 7,6.60345 c 3.85,3.63189 7,7.13974 7,7.79522 0,1.38281 4.58263,5.86013 7.5,7.32765 1.1,0.55333 3.8446,1.3114 6.09911,1.68459 3.45865,0.57252 4.55235,0.29956 7,-1.74704 3.52912,-2.95087 7.40089,-4.33721 7.40089,-2.64999 0,0.71236 0.84074,0.96416 2.11054,0.6321 1.52433,-0.39863 2.25111,-0.0144 2.61663,1.38337 0.34715,1.32749 1.37804,1.93528 3.28247,1.93528 3.01029,0 4.15494,-1.65461 3.32917,-4.81235 -0.79674,-3.04677 2.47168,-3.22207 7.43668,-0.39886 2.35153,1.33713 5.13846,2.20547 6.19319,1.92966 2.32936,-0.60915 5.5126,2.58495 4.69627,4.71228 -0.31768,0.82788 -0.14726,1.77119 0.37872,2.09627 1.65565,1.02325 1.05446,3.07451 -2.04367,6.973 -3.52291,4.43301 -3.68763,6.2243 -1.02855,11.18556 1.51623,2.82897 1.70623,3.99788 0.82283,5.06231 -1.75496,2.11461 -6.40074,4.25213 -9.24174,4.25213 -1.46286,0 -4.14402,1.41168 -6.29966,3.31689 -3.34004,2.95201 -14.3161,9.68311 -15.78976,9.68311 -0.31194,0 -1.03778,-1.35 -1.61297,-3 -1.27088,-3.64564 -4.10106,-3.93296 -9.85015,-1 -2.15618,1.1 -5.32287,2 -7.03709,2 -3.65078,0 -8.96291,4.68218 -8.96291,7.90003 0,1.12963 -1.078,2.7602 -2.39555,3.62349 -3.40666,2.23213 -3.8652,5.24024 -1.45304,9.5321 2.70087,4.80554 1.70002,6.67387 -6.43245,12.00769 -6.61399,4.33791 -5.64658,4.21192 -17.7094,2.30631 -4.83931,-0.76449 -6.28081,0.25874 -9.60442,6.81757 -2.19352,4.32871 -2.78087,4.81281 -5.83928,4.81281 -3.10889,0 -3.5478,0.38584 -5.11901,4.5 -0.94522,2.475 -2.36705,4.5 -3.15964,4.5 -1.28695,0 -3.83202,-2.3758 -8.65601,-8.08033 -0.86918,-1.02784 -2.82928,-2.12884 -4.35577,-2.44668 -1.52649,-0.31784 -4.6452,-1.53404 -6.93047,-2.70267 -3.9924,-2.04162 -4.25903,-2.05664 -6.81208,-0.38382 -3.25362,2.13185 -2.84362,3.94365 1.04661,4.62505 1.60628,0.28134 4.55431,1.53161 6.55118,2.77837 3.50953,2.19119 4.86933,5.08675 4.86933,10.36879 0,2.27026 -5.41159,7.84129 -7.61687,7.84129 -0.85135,0 -4.62376,-1.35 -8.38313,-3 -8.07175,-3.54271 -9.74876,-3.63987 -17.25968,-1 -3.1297,1.1 -6.53186,2 -7.56035,2 -1.0285,0 -2.65035,0.86228 -3.60411,1.91617 -1.70383,1.88272 -1.79627,1.87399 -5.29453,-0.5 -2.99677,-2.03366 -4.7706,-2.41617 -11.2046,-2.41617 -7.03476,0 -8.07728,-0.27902 -13.07673,-3.5 -2.98791,-1.925 -6.3823,-3.5 -7.54309,-3.5 -1.74394,0 -2.03897,-0.48753 -1.69857,-2.80688 0.56568,-3.85418 -1.10229,-4.91627 -9.8099,-6.24648 -4.09665,-0.62581 -9.14505,-1.76983 -11.21868,-2.54224 -4.36656,-1.62652 -9.34445,-1.83687 -10.21297,-0.43157 -0.33068,0.53505 -2.40582,1.45875 -4.61141,2.05265 -2.2056,0.59391 -4.96775,2.18114 -6.13811,3.52718 -1.17037,1.34604 -2.69628,2.44734 -3.39091,2.44734 -0.69462,0 -1.9244,0.94434 -2.73282,2.09853 -1.13425,1.61937 -2.11761,1.95677 -4.30671,1.47768 -1.93207,-0.42285 -4.11256,0.0592 -6.83683,1.51155 -2.41655,1.28826 -7.16691,2.4658 -12,2.97459 -4.4,0.46321 -9.29966,1.15301 -10.88812,1.5329 -2.87134,0.6867 -2.88406,0.66912 -2.19046,-3.02807 0.91634,-4.88452 -0.44126,-6.36827 -6.57085,-7.18139 -4.14712,-0.55013 -5.18395,-1.12978 -6.47028,-3.61727 -1.21425,-2.34809 -1.98252,-2.82854 -3.70604,-2.31759 -1.19584,0.35451 -4.43414,0.98384 -7.19623,1.3985 -4.17443,0.62669 -6.284,1.81544 -12.5,7.04376 -4.11291,3.45941 -7.35563,6.88084 -7.20604,7.60318 0.1496,0.72234 -1.31324,2.29306 -3.25074,3.49051 -5.91438,3.65528 -8.69904,9.96345 -5.02124,11.37475 2.46255,0.94497 1.72437,2.95883 -2.25003,6.13837 -3.45431,2.76347 -4.37258,3 -11.64647,3 -4.34307,0 -9.77061,-0.47136 -12.06121,-1.04747 z"
        id="Odasa" />
-</div>
+  </g>
+</svg>
+
+        </svg>
+
+      </div>
+
+      <div id="hoverLabel" aria-hidden="true"></div>
+    </section>
+  </main>
 
 <script>
 
-/* ---------------- SHADE GENERATOR ---------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  const $ = sel => document.querySelector(sel);
+  const paletteDiv = $('#palette');
+  const hoverLabel = $('#hoverLabel');
+  const loader = document.getElementById('loaderOverlay');
+  const soundBtn = document.getElementById('soundBtn');
+  const themeBtn = document.getElementById('themeBtn');
+  const themeLabel = document.getElementById('themeLabel');
+  const soundLabel = document.getElementById('soundLabel');
 
-function generateShades(base){
-    const c = hexToRgb(base);
-    return {
-        safe: base,
-        likely: rgbToHex(lighten(c,30)),
-        tilt: rgbToHex(lighten(c,60))
-    }
-}
+  let soundEnabled = localStorage.getItem('r2e_sound') === '1';
+  let darkEnabled = localStorage.getItem('r2e_dark') === '1';
+  if(darkEnabled) document.body.classList.add('dark');
 
-function lighten(color,percent){
-    return {
-        r: Math.min(255, color.r + (255-color.r)*percent/100),
-        g: Math.min(255, color.g + (255-color.g)*percent/100),
-        b: Math.min(255, color.b + (255-color.b)*percent/100)
-    }
-}
+  function updateThemeUI(){
+    if(document.body.classList.contains('dark')) { themeLabel.textContent = 'Dark'; themeBtn.setAttribute('aria-pressed','true'); }
+    else { themeLabel.textContent = 'Light'; themeBtn.setAttribute('aria-pressed','false'); }
+  }
+  function updateSoundUI(){ soundBtn.setAttribute('aria-pressed', soundEnabled ? 'true' : 'false'); soundLabel.textContent = soundEnabled ? 'Sound' : 'Muted'; }
+  updateThemeUI(); updateSoundUI();
 
-function hexToRgb(hex){
-    const bigint=parseInt(hex.slice(1),16);
-    return {r:(bigint>>16)&255,g:(bigint>>8)&255,b:bigint&255};
-}
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    darkEnabled = document.body.classList.contains('dark');
+    localStorage.setItem('r2e_dark', darkEnabled ? '1' : '0');
+    updateThemeUI();
+  });
 
-function rgbToHex({r,g,b}){
-    return "#"+[r,g,b].map(x=>Math.round(x).toString(16).padStart(2,'0')).join('');
-}
+  soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    localStorage.setItem('r2e_sound', soundEnabled ? '1' : '0');
+    updateSoundUI();
+    if(soundEnabled) playTone(880, 0.06);
+  });
 
-/* ---------------- ELECTION DATA ---------------- */
+  let audioCtx = null;
+  function getAudioCtx(){
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  function playTone(freq=880, time=0.08){
+    if(!soundEnabled) return;
+    try{
+      const ctx = getAudioCtx();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.frequency.value = freq;
+      o.type = 'sine';
+      o.connect(g);
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.001);
+      o.start();
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + time);
+      o.stop(ctx.currentTime + time + 0.02);
+    }catch(e){ /* silent fail on older browsers */ }
+  }
 
-const elections={
 
-/* KEEP YOUR OLD ELECTIONS HERE — unchanged for brevity */
+  const parties = {
+    blue:   { safe:"#0033ff", likely:"#4d6dff", tilt:"#99aaff", nomineeInput:"nominee_blue" },
+    purple: { safe:"#8000ff", likely:"#a64dff", tilt:"#c299ff", nomineeInput:"nominee_purple" },
+    red:    { safe:"#cc0000", likely:"#ff4d4d", tilt:"#ff9999", nomineeInput:"nominee_red" },
+    yellow: { safe:"#e6c300", likely:"#ffe066", tilt:"#fff2b3", nomineeInput:"nominee_yellow" }
+  };
+  const scores = { safe:3, likely:2, tilt:1 };
+  const defaultFill = getComputedStyle(document.documentElement).getPropertyValue('--default-fill') || '#999999';
 
-/* ---------------- DECEMBER 2025 ---------------- */
-dec2025:{
- parties:{
-  ULS:{name:"United Liberal Socialists",base:"#2563eb"},
-  AUP:{name:"Adizzian Unity Party",base:"#9333ea"},
-  CDP:{name:"Civic Democratic Party",base:"#dc2626"},
-  MoA:{name:"Moderates of Adizzia",base:"#86efac"},
-  IND:{name:"Independent",base:"#facc15"}
- },
- nominees:{
-  ULS:"Jazzy",
-  AUP:"Riri",
-  CDP:"Chester",
-  MoA:"",
-  IND:"Kospii"
- },
- results:{
-  Wicsovia:["ULS","safe"],
-  Alternat:["IND","safe"],
-  NewValencia:["ULS","safe"],
-  Odasa:["CDP","safe"],
-  Mapsin:["AUP","likely"],
-  Alexandria:["ULS","safe"],
-  Phosias:["ULS","likely"],
-  Wakefield:["ULS","tilt"],
-  NewBelgium:["AUP","tilt"],
-  Emporia:["AUP","likely"],
-  IslandTerritories:["IND","tilt"]
- }
+  const elections = {
+    "Aug2025": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "purple.safe",
+      "New Valencia": "blue.safe",
+      "Odasa": "red.tilt",
+      "Mapsin": "purple.safe",
+      "Alexandria": "purple.likely",
+      "Phosias": "purple.safe",
+      "Wakefield": "purple.tilt",
+      "New Belgium": "purple.safe",
+      "Emporia": "purple.likely",
+      "Island Territories": "purple.safe"
+    },
+    "Sep2025": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "purple.likely",
+      "New Valencia": "blue.safe",
+      "Odasa": "purple.safe",
+      "Mapsin": "purple.safe",
+      "Alexandria": "blue.likely",
+      "Phosias": "purple.safe",
+      "Wakefield": "purple.safe",
+      "New Belgium": "purple.safe",
+      "Emporia": "blue.tilt",
+      "Island Territories": "purple.safe"
+    },
+    "Oct2025": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "purple.safe",
+      "New Valencia": "blue.safe",
+      "Odasa": "red.tilt",
+      "Mapsin": "blue.likely",
+      "Alexandria": "blue.safe",
+      "Phosias": "red.safe",
+      "Wakefield": "purple.tilt",
+      "New Belgium": "purple.tilt",
+      "Emporia": "purple.likely",
+      "Island Territories": "blue.likely"
+    },
+    "Nov2025": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "blue.likely",
+      "New Valencia": "blue.safe",
+      "Odasa": "blue.likely",
+      "Mapsin": "purple.likely",
+      "Alexandria": "purple.likely",
+      "Phosias": "purple.safe",
+      "Wakefield": "blue.tilt",
+      "New Belgium": "purple.safe",
+      "Emporia": "purple.safe",
+      "Island Territories": "blue.likely"
+  }
+,
+"December 2025": {
+  parties: {
+    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
+    AUP: { name: "Adizzian Unity Party", color: "#7b3fe4" },
+    CDP: { name: "Civic Democratic Party", color: "#c0392b" },
+    MoA: { name: "Moderates of Adizzia", color: "#90ee90" },
+    IND: { name: "Independent", color: "#f4d03f" }
+  },
+  nominees: {
+    ULS: "Jazzy",
+    AUP: "Riri",
+    CDP: "Chester",
+    MoA: "",
+    IND: "Kospii"
+  },
+  results: {
+    Wicsovia: ["ULS","Safe"],
+    Alternat: ["IND","Safe"],
+    NewValencia: ["ULS","Safe"],
+    Odasa: ["CDP","Safe"],
+    Mapsin: ["AUP","Likely"],
+    Alexandria: ["ULS","Safe"],
+    Phosias: ["ULS","Likely"],
+    Wakefield: ["ULS","Tilt"],
+    NewBelgium: ["AUP","Tilt"],
+    Emporia: ["AUP","Likely"],
+    IslandTerritories: ["IND","Tilt"]
+  }
 },
 
-/* ---------------- JANUARY 2026 ---------------- */
-jan2026:{
- parties:{
-  ULS:{name:"United Liberal Socialists",base:"#2563eb"},
-  AUDP:{name:"Adizzian United Democratic Party",base:"#9333ea"},
-  AFtS:{name:"AFtS",base:"#7c2d12"},
-  MoA:{name:"Moderates of Adizzia",base:"#86efac"},
-  IND:{name:"Independent",base:"#facc15"}
- },
- nominees:{
-  ULS:"Jazzy",
-  AUDP:"",
-  AFtS:"",
-  MoA:"Blade",
-  IND:""
- },
- results:{
-  Wicsovia:["ULS","safe"],
-  Alternat:["MoA","tilt"],
-  NewValencia:["ULS","safe"],
-  Odasa:["MoA","safe"],
-  Mapsin:["MoA","likely"],
-  Alexandria:["ULS","safe"],
-  Phosias:["MoA","safe"],
-  Wakefield:["ULS","tilt"],
-  NewBelgium:["MoA","safe"],
-  Emporia:["MoA","tilt"],
-  IslandTerritories:["ULS","likely"]
- }
+"January 2026": {
+  parties: {
+    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
+    AUDP: { name: "Adizzian United Democratic Party", color: "#7b3fe4" },
+    AFtS: { name: "ADIZZIA: Flip the Switch", color: "#8B4513" },
+    MoA: { name: "Moderates of Adizzia", color: "#90ee90" },
+    IND: { name: "Independent", color: "#f4d03f" }
+  },
+  nominees: {
+    ULS: "Jazzy",
+    AUDP: "",
+    AFtS: "",
+    MoA: "Blade",
+    IND: ""
+  },
+  results: {
+    Wicsovia: ["ULS","Safe"],
+    Alternat: ["MoA","Tilt"],
+    NewValencia: ["ULS","Safe"],
+    Odasa: ["MoA","Safe"],
+    Mapsin: ["MoA","Likely"],
+    Alexandria: ["ULS","Safe"],
+    Phosias: ["MoA","Safe"],
+    Wakefield: ["ULS","Tilt"],
+    NewBelgium: ["MoA","Safe"],
+    Emporia: ["MoA","Tilt"],
+    IslandTerritories: ["ULS","Likely"]
+  }
 },
 
-/* ---------------- FEBRUARY 2026 (DEFAULT) ---------------- */
-feb2026:{
- parties:{
-  ULS:{name:"United Liberal Socialists",base:"#2563eb"},
-  DMoA:{name:"Democratic Moderates of Adizzia",base:"#f97316"},
-  AFtS:{name:"AFtS",base:"#7c2d12"},
-  UAP:{name:"United Adizzia Party",base:"#e5e7eb"},
-  IND:{name:"Independent",base:"#facc15"}
- },
- nominees:{
-  ULS:"Jazzy",
-  DMoA:"",
-  AFtS:"",
-  UAP:"",
-  IND:""
- },
- results:{
-  Wicsovia:["ULS","tilt"],
-  Alternat:["UAP","safe"],
-  NewValencia:["ULS","safe"],
-  Odasa:["ULS","likely"],
-  Mapsin:["ULS","tilt"],
-  Alexandria:["ULS","safe"],
-  Phosias:["AFtS","safe"],
-  Wakefield:["AFtS","tilt"],
-  NewBelgium:["ULS","safe"],
-  Emporia:["UAP","tilt"],
-  IslandTerritories:["ULS","safe"]
- }
+"February 2026": {
+  parties: {
+    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
+    DMoA: { name: "Democratic Moderates of Adizzia", color: "#f39c12" },
+    AFtS: { name: "ADIZZIA: Flip the Switch", color: "#8B4513" },
+    UAP: { name: "United Adizzia Party", color: "#e6e6e6" },
+    IND: { name: "Independent", color: "#f4d03f" }
+  },
+  nominees: {
+    ULS: "Jazzy",
+    DMoA: "",
+    AFtS: "Salted",
+    UAP: "Star",
+    IND: "Idk"
+  },
+  results: {
+    Wicsovia: ["ULS","Tilt"],
+    Alternat: ["UAP","Safe"],
+    NewValencia: ["ULS","Safe"],
+    Odasa: ["ULS","Likely"],
+    Mapsin: ["ULS","Tilt"],
+    Alexandria: ["ULS","Safe"],
+    Phosias: ["AFtS","Safe"],
+    Wakefield: ["AFtS","Tilt"],
+    NewBelgium: ["ULS","Safe"],
+    Emporia: ["UAP","Tilt"],
+    IslandTerritories: ["ULS","Safe"]
+  }
 }
+  };
 
-};
+  const partyNameMapping = {
+    "Aug2025": { blue:"ALP", purple:"ANP", red:"ACP", yellow:null },
+    "Sep2025": { blue:"ALP", purple:"ANP", red:"ACP", yellow:"IND" },
+    "Oct2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" },
+    "Nov2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" }
+  };
 
-/* ---------------- CORE LOGIC ---------------- */
+  const fullNameByAbbrev = {
+    ALP: "Adizzian Liberal Party",
+    ANP: "Adizzian Nationalist Party",
+    ACP: "Adizzian Conservative Party",
+    ULS: "United Liberal Socialists",
+    AUP: "Adizzian Unity Party",
+    CDP: "Civic Democratic Party",
+    IND: "Independent"
+  };
 
-let currentElection=null;
+  const leadersByElection = {
+    "Aug2025": { blue:"Nebula", purple:"Solar", red:"Kayden", yellow:"" },
+    "Sep2025": { blue:"Nebula", purple:"Xaelance", red:"Gendarmerie", yellow:"Display" },
+    "Oct2025": { blue:"Jazzy", purple:"Slurps", red:"Chester", yellow:"" },
+    "Nov2025": { blue:"Jazzy", purple:"Xaelance", red:"Solar", yellow:"Minebloxco" }
+  };
 
-function loadElection(key){
-    currentElection=elections[key];
-    buildPalette();
-    buildNominees();
-    applyResults();
-}
+  const labelBlue = $('#label_blue');
+  const labelPurple = $('#label_purple');
+  const labelRed = $('#label_red');
+  const labelYellow = $('#label_yellow');
+  const nomineeBlue = $('#nominee_blue');
+  const nomineePurple = $('#nominee_purple');
+  const nomineeRed = $('#nominee_red');
+  const nomineeYellow = $('#nominee_yellow');
 
-function buildPalette(){
-    const div=document.getElementById("palette");
-    div.innerHTML="";
-    Object.entries(currentElection.parties).forEach(([code,party])=>{
-        const shades=generateShades(party.base);
-        ["safe","likely","tilt"].forEach(level=>{
-            const btn=document.createElement("div");
-            btn.className="paletteBtn";
-            btn.style.background=shades[level];
-            btn.innerText=`${code} - ${level.toUpperCase()}`;
-            btn.onclick=()=>selected={code,level};
-            div.appendChild(btn);
-        });
+  let selectedColor = null;
+  let selectedPaletteEl = null;
+  const paletteButtons = [];
+  Object.entries(parties).forEach(([partyKey, shades])=>{
+    Object.entries(shades).forEach(([shadeLabel, color])=>{
+      if(shadeLabel === 'nomineeInput') return;
+      const btn = document.createElement('div');
+      btn.className = 'colorOption';
+      btn.dataset.partyKey = partyKey;
+      btn.dataset.shade = shadeLabel;
+      btn.dataset.color = color;
+      btn.style.background = color;
+      btn.innerHTML = `<div class="label">${partyKey.toUpperCase()}</div><div class="shade">${capitalize(shadeLabel)}</div>`;
+      btn.addEventListener('click', () => {
+        selectedColor = color;
+        if(selectedPaletteEl) selectedPaletteEl.classList.remove('selected');
+        btn.classList.add('selected');
+        selectedPaletteEl = btn;
+        playTone(1100,0.06);
+      });
+      paletteDiv.appendChild(btn);
+      paletteButtons.push(btn);
     });
-}
+  });
 
-function buildNominees(){
-    const div=document.getElementById("nomineeInputs");
-    div.innerHTML="";
-    Object.entries(currentElection.parties).forEach(([code,party])=>{
-        const input=document.createElement("input");
-        input.placeholder=`${code} Nominee`;
-        input.value=currentElection.nominees[code]||"";
-        input.oninput=(e)=>currentElection.nominees[code]=e.target.value;
-        div.appendChild(input);
+  const svg = document.querySelector('#mapContainer svg');
+  if(!svg){ console.error('No <svg> found inside #mapContainer. Paste your exported SVG there.'); }
+
+  function normalizeIdText(s){ return String(s||'').replace(/\s+/g,'').replace(/[^a-z0-9]/gi,'').toLowerCase(); }
+  const allIds = svg ? Array.from(svg.querySelectorAll('[id]')).map(el => String(el.id).trim()).filter(Boolean) : [];
+  const normalizedToActual = {};
+  allIds.forEach(id => normalizedToActual[ normalizeIdText(id) ] = id );
+
+  function isAutoId(id){ if(!id) return true; return /^(path|rect|g|layer|image|svg|text)\d+$/i.test(id) || /^svg.*$/i.test(id); }
+  const regionIds = new Set();
+  allIds.forEach(id => { if(!isAutoId(id)) regionIds.add(id); });
+  if(regionIds.size === 0 && svg){
+    svg.children && Array.from(svg.children).forEach(ch => { if(ch.id && !isAutoId(ch.id)) regionIds.add(ch.id); });
+  }
+
+  const disableMilitaryIds = new Set(["Military District","MilitaryDistrict","militarydistrict"]);
+  disableMilitaryIds.forEach(x => { if(regionIds.has(x)) regionIds.delete(x); });
+
+  if(svg){
+    svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
+      const eid = String(el.id || '').trim();
+      if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))){
+        el.style.pointerEvents = 'none';
+        el.style.cursor = 'default';
+        el.style.fill = defaultFill;
+        return;
+      }
+      if(!el.style.fill && !el.getAttribute('fill')) el.style.fill = defaultFill;
+      el.style.pointerEvents = el.style.pointerEvents || 'visiblePainted';
+      el.style.cursor = 'pointer';
     });
-}
+  }
 
-function applyResults(){
-    const regions=document.querySelectorAll(".region");
-    regions.forEach(r=>r.style.fill="#999");
+  function findRegionElementFromTarget(target){
+    if(!target) return null;
+    let node = target;
+    const root = svg;
+    while(node && node !== root && node.nodeType === 1){
+      const id = (node.id || '').trim();
+      if(id && regionIds.has(id)) return node;
+      node = node.parentElement;
+    }
+    if(node && node.id && regionIds.has(node.id)) return node;
+    return null;
+  }
 
-    const totals={};
+  function resolveRegionKeyToSvgId(providedKey){
+    if(!providedKey) return null;
+    if(regionIds.has(providedKey)) return providedKey;
+    const norm = normalizeIdText(providedKey);
+    if(normalizedToActual[norm]) return normalizedToActual[norm];
+    for(const rid of regionIds){
+      if(normalizeIdText(rid) === norm) return rid;
+    }
+    return null;
+  }
 
-    Object.entries(currentElection.results).forEach(([region,[party,level]])=>{
-        const el=document.getElementById(region);
-        if(!el) return;
-        const base=currentElection.parties[party].base;
-        const shade=generateShades(base)[level];
-        el.style.fill=shade;
+  function hexToPartyShade(hex){
+    if(!hex) return null;
+    const h = String(hex).toLowerCase();
+    for(const [partyKey, shades] of Object.entries(parties)){
+      for(const [label, shade] of Object.entries(shades)){
+        if(label === 'nomineeInput') continue;
+        if(String(shade).toLowerCase() === h) return { party: partyKey, label };
+      }
+    }
+    return null;
+  }
 
-        if(!totals[party]) totals[party]=0;
-        totals[party]+= level==="safe"?3:level==="likely"?2:1;
+  let regionState = {}; // regionId -> color
+  if(svg){
+    svg.addEventListener('click', e => {
+      const clicked = e.target;
+      const regionEl = findRegionElementFromTarget(clicked);
+      if(!regionEl) return; // ignore background / layers
+      if(!selectedColor) return; // no chosen color
+      const regionId = regionEl.id;
+      if(regionEl.tagName.toLowerCase() === 'g'){
+        regionEl.querySelectorAll('path, polygon, rect, circle').forEach(ch => ch.style.fill = selectedColor);
+      } else {
+        regionEl.style.fill = selectedColor;
+      }
+      regionState[regionId] = selectedColor;
+      playTone(660, 0.06);
+      updateResults();
+    });
+  }
+
+  if(svg){
+    svg.addEventListener('mousemove', function(e) {
+      const hovered = document.elementFromPoint(e.clientX, e.clientY);
+      const regionEl = findRegionElementFromTarget(hovered);
+      if(!regionEl) { hoverLabel.classList.remove('visible'); hoverLabel.style.display = 'none'; return; }
+      hoverLabel.style.display = 'block';
+      hoverLabel.classList.add('visible');
+      hoverLabel.textContent = regionEl.id || '(unknown)';
+      let left = e.pageX + 12, top = e.pageY + 12;
+      const rect = hoverLabel.getBoundingClientRect();
+      if(left + rect.width > window.innerWidth) left = e.pageX - rect.width - 12;
+      if(top + rect.height > window.innerHeight) top = e.pageY - rect.height - 12;
+      hoverLabel.style.left = left + 'px';
+      hoverLabel.style.top = top + 'px';
+    });
+    svg.addEventListener('mouseleave', function(){ hoverLabel.classList.remove('visible'); hoverLabel.style.display = 'none'; });
+  }
+
+  let currentElectionKey = null;
+  function updatePaletteLabelsForElection(electionKey){
+    currentElectionKey = electionKey;
+    const mapping = partyNameMapping[electionKey] || {};
+    paletteButtons.forEach(btn => {
+      const partyKey = btn.dataset.partyKey; // 'blue','purple','red','yellow'
+      const shade = btn.dataset.shade; // 'safe','likely','tilt'
+      const abbrev = mapping[partyKey] || partyKey.toUpperCase();
+      if(partyKey === 'yellow' && !mapping.yellow){
+        btn.classList.add('hidden');
+      } else {
+        btn.classList.remove('hidden');
+        btn.querySelector('.label').textContent = abbrev;
+        btn.querySelector('.shade').textContent = capitalize(shade);
+      }
     });
 
-    const winner=Object.entries(totals).sort((a,b)=>b[1]-a[1])[0][0];
-    const partyName=currentElection.parties[winner].name;
+    labelBlue.textContent = mapping.blue ? `${mapping.blue} Nominee` : 'BLUE Nominee';
+    labelPurple.textContent = mapping.purple ? `${mapping.purple} Nominee` : 'PURPLE Nominee';
+    labelRed.textContent = mapping.red ? `${mapping.red} Nominee` : 'RED Nominee';
 
-    const text = partyName==="AFtS"
-        ? `${partyName} will win`
-        : `The ${partyName} are projected to win`;
+    if(mapping.yellow){
+      document.getElementById('yellowRow').style.display = '';
+      labelYellow.textContent = mapping.yellow === 'IND' ? 'IND Nominee' : `${mapping.yellow} Nominee`;
+    } else {
+      document.getElementById('yellowRow').style.display = 'none';
+      nomineeYellow.value = '';
+    }
+  }
 
-    document.getElementById("projection").innerText=text;
-}
+  function updateResults(){
+    const totals = { blue:0, purple:0, red:0, yellow:0 };
+    const stateCounts = { blue:0, purple:0, red:0, yellow:0 };
 
-/* AUTOLOAD FEBRUARY */
-window.onload=()=>loadElection("feb2026");
+    Object.entries(regionState).forEach(([region, color]) => {
+      const ps = hexToPartyShade(color);
+      if(ps){
+        totals[ps.party] += scores[ps.label];
+        stateCounts[ps.party] += 1;
+      }
+    });
+
+    const sorted = Object.entries(totals).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
+    const winnerKey = (sorted.length && sorted[0][1] > 0) ? sorted[0][0] : null;
+    const winnerAbbrev = winnerKey && currentElectionKey ? (partyNameMapping[currentElectionKey] && partyNameMapping[currentElectionKey][winnerKey]) : null;
+    const winnerFull = winnerAbbrev ? (fullNameByAbbrev[winnerAbbrev] || winnerAbbrev) : null;
+    const nomineeId = winnerKey ? (parties[winnerKey] && parties[winnerKey].nomineeInput) : null;
+    const nomineeVal = nomineeId ? (document.getElementById(nomineeId).value || '(unknown)') : '(unknown)';
+
+    const winnerText = document.getElementById('winnerText');
+    if(winnerFull){
+      winnerText.innerHTML = `The <strong>${winnerFull}</strong> are projected to win.<br>The next Prime Minister will be <strong>${escapeHtml(nomineeVal)}</strong>.`;
+      winnerText.animate([{ transform:'scale(1)' }, { transform:'scale(1.02)' }, { transform:'scale(1)' }], { duration:450, easing:'ease-out' });
+    } else {
+      winnerText.innerHTML = 'No projection yet.';
+    }
+
+    let txt = '';
+    Object.entries(totals).forEach(([p,v]) => {
+      const displayName = (partyNameMapping[currentElectionKey] && partyNameMapping[currentElectionKey][p]) || p.toUpperCase();
+      txt += `<strong>${displayName}</strong>: ${v} pts — ${stateCounts[p] || 0} states<br>`;
+    });
+    document.getElementById('stateCounts').innerHTML = txt;
+  }
+
+  window.resetMap = function(){
+    regionState = {};
+    if(svg){
+      svg.querySelectorAll('path, polygon, rect, circle').forEach(el=>{
+        el.style.fill = defaultFill;
+        const eid = (el.id||'').trim();
+        if(disableMilitaryIds.has(eid) || disableMilitaryIds.has(normalizeIdText(eid))) el.style.pointerEvents = 'none';
+        else el.style.pointerEvents = 'visiblePainted';
+      });
+    }
+    nomineeBlue.value = '';
+    nomineePurple.value = '';
+    nomineeRed.value = '';
+    nomineeYellow.value = '';
+    if(selectedPaletteEl){ selectedPaletteEl.classList.remove('selected'); selectedPaletteEl = null; selectedColor = null; }
+    playTone(440,0.06);
+    updateResults();
+  };
+
+  function applyNomineeDefaults(electionKey){
+    const mapping = partyNameMapping[electionKey] || {};
+    labelBlue.textContent = mapping.blue ? `${mapping.blue} — Nominee` : 'BLUE — Nominee';
+    labelPurple.textContent = mapping.purple ? `${mapping.purple} — Nominee` : 'PURPLE — Nominee';
+    labelRed.textContent = mapping.red ? `${mapping.red} — Nominee` : 'RED — Nominee';
+    labelYellow.textContent = mapping.yellow ? (mapping.yellow === 'IND' ? 'IND — Nominee' : `${mapping.yellow} — Nominee`) : 'Nominee';
+
+    const defaults = leadersByElection[electionKey] || {};
+    nomineeBlue.value = defaults.blue || '';
+    nomineePurple.value = defaults.purple || '';
+    nomineeRed.value = defaults.red || '';
+    nomineeYellow.value = defaults.yellow || '';
+    nomineeBlue.placeholder = mapping.blue ? `${mapping.blue} Nominee` : 'Blue Nominee';
+    nomineePurple.placeholder = mapping.purple ? `${mapping.purple} Nominee` : 'Purple Nominee';
+    nomineeRed.placeholder = mapping.red ? `${mapping.red} Nominee` : 'Red Nominee';
+    nomineeYellow.placeholder = mapping.yellow ? `${mapping.yellow} Nominee` : 'Nominee';
+  }
+
+  window.loadElection = function(key){
+    if(!elections[key]){ console.warn('No election data for', key); return; }
+    currentElectionKey = key;
+    regionState = {};
+
+    updatePaletteLabelsForElection(key);
+    applyNomineeDefaults(key);
+
+    Object.entries(elections[key]).forEach(([providedKey, colorRef])=>{
+      const foundId = resolveRegionKeyToSvgId(providedKey);
+      if(!foundId) return;
+      const regionEl = document.querySelector(`#${CSS.escape(foundId)}`);
+      if(!regionEl) return;
+      const col = (typeof colorRef === 'string' && colorRef.includes('.')) ? (() => {
+        const [p, shade] = colorRef.split('.');
+        return (parties[p] && parties[p][shade]) || null;
+      })() : colorRef;
+      if(regionEl.tagName.toLowerCase() === 'g'){
+        regionEl.querySelectorAll('path, polygon, rect, circle').forEach(ch => ch.style.fill = col || defaultFill);
+      } else {
+        regionEl.style.fill = col || defaultFill;
+      }
+      if(col) regionState[foundId] = col;
+    });
+    if(key === 'Aug2025'){
+      document.getElementById('yellowRow').style.display = 'none';
+      paletteButtons.forEach(btn => { if(btn.dataset.partyKey === 'yellow') btn.classList.add('hidden'); });
+      nomineeYellow.value = '';
+    } else {
+      document.getElementById('yellowRow').style.display = '';
+      paletteButtons.forEach(btn => { if(btn.dataset.partyKey === 'yellow') btn.classList.remove('hidden'); });
+    }
+
+    updateResults();
+  };
+
+  setTimeout(() => {
+    loader.classList.add('hidden');
+  }, 750);
+  setTimeout(() => { loader.style.display = 'none'; }, 1200);
+
+  function capitalize(s){ return String(s||'').charAt(0).toUpperCase() + String(s||'').slice(1); }
+  function escapeHtml(str){ return String(str).replace(/[&<>"'`]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[s])); }
+
+  resetMap();
+  loadElection('Feb2026');
+
+  window.__map_debug = { regionIds:Array.from(regionIds), normalizedToActual, elections, partyNameMapping, leadersByElection };
+
+  updateThemeUI();
+  updateSoundUI();
+});
+(function(){
+  const tryHideLoader = () => {
+    const loader = document.getElementById('loaderOverlay');
+    if(!loader) return;
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 500);
+  };
+
+  if (document.readyState === 'complete') {
+    tryHideLoader();
+  } else {
+    window.addEventListener('load', tryHideLoader, { once: true });
+    setTimeout(tryHideLoader, 4000);
+  }
+})();
 
 </script>
 </body>
 </html>
-
