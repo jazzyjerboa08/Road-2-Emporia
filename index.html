@@ -837,23 +837,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateThemeUI();
   updateSoundUI();
 });
-function hideLoader() {
-  const loader = document.getElementById('loaderOverlay');
-  if (!loader) return; // prevents crash
-  loader.classList.add('hidden');
-  setTimeout(() => {
-    loader.style.display = 'none';
-  }, 500);
-}
-
-window.addEventListener('load', hideLoader);
-setTimeout(hideLoader, 2000);
-  }
-})();
 
 </script>
 </body>
 </html>
+
 
 
 
