@@ -131,6 +131,10 @@
         <div class="partyRow"><div id="label_blue" class="partyName">BLUE Nominee</div><input id="nominee_blue" class="partyInput" placeholder="Blue Nominee" /></div>
         <div class="partyRow"><div id="label_purple" class="partyName">PURPLE Nominee</div><input id="nominee_purple" class="partyInput" placeholder="Purple Nominee" /></div>
         <div class="partyRow"><div id="label_red" class="partyName">RED Nominee</div><input id="nominee_red" class="partyInput" placeholder="Red Nominee" /></div>
+        <div class="partyRow"><div id="label_green" class="partyName">GREEN Nominee</div><input id="nominee_green" class="partyInput" placeholder="Green Nominee" /></div>
+        <div class="partyRow"><div id="label_brown" class="partyName">BROWN Nominee</div><input id="nominee_brown" class="partyInput" placeholder="Brown Nominee" /></div>
+        <div class="partyRow"><div id="label_orange" class="partyName">ORANGE Nominee</div><input id="nominee_orange" class="partyInput" placeholder="Orange Nominee" /></div>
+        <div class="partyRow"><div id="label_white" class="partyName">WHITE Nominee</div><input id="nominee_white" class="partyInput" placeholder="White Nominee" /></div>
         <div id="yellowRow" class="partyRow"><div id="label_yellow" class="partyName">IND Nominee</div><input id="nominee_yellow" class="partyInput" placeholder="Nominee" /></div>
       </section>
 
@@ -140,6 +144,9 @@
         <div class="button" onclick="loadElection('Sep2025')">Show September 2025</div>
         <div class="button" onclick="loadElection('Oct2025')">Show October 2025</div>
         <div class="button" onclick="loadElection('Nov2025')">Show November 2025</div>
+        <div class="button" onclick="loadElection('Dec2025')">Show December 2025</div>
+        <div class="button" onclick="loadElection('Jan2026')">Show January 2026</div>
+        <div class="button" onclick="loadElection('Feb2026')">Show February 2026</div>
       </section>
 
       <section id="resultsBox" style="margin-top:12px">
@@ -367,11 +374,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const parties = {
-    blue:   { safe:"#0033ff", likely:"#4d6dff", tilt:"#99aaff", nomineeInput:"nominee_blue" },
-    purple: { safe:"#8000ff", likely:"#a64dff", tilt:"#c299ff", nomineeInput:"nominee_purple" },
-    red:    { safe:"#cc0000", likely:"#ff4d4d", tilt:"#ff9999", nomineeInput:"nominee_red" },
-    yellow: { safe:"#e6c300", likely:"#ffe066", tilt:"#fff2b3", nomineeInput:"nominee_yellow" }
-  };
+  blue:   { safe:"#0033ff", likely:"#4d6dff", tilt:"#99aaff", nomineeInput:"nominee_blue" },
+  purple: { safe:"#8000ff", likely:"#a64dff", tilt:"#c299ff", nomineeInput:"nominee_purple" },
+  red:    { safe:"#cc0000", likely:"#ff4d4d", tilt:"#ff9999", nomineeInput:"nominee_red" },
+  yellow: { safe:"#e6c300", likely:"#ffe066", tilt:"#fff2b3", nomineeInput:"nominee_yellow" },
+  orange: { safe:"#ff9000", likely:"#ffa265", tilt:"#ffbf98", nomineeInput:"nominee_orange" },
+  brown:  { safe:"#883d0e", likely:"#b55417", tilt:"#e29a6d", nomineeInput:"nominee_brown" },
+  green:  { safe:"#11eb18", likely:"#40ff46", tilt:"#97ff9a", nomineeInput:"nominee_green" },
+  white:  { safe:"#d1d1d1", likely:"#dcdcdc", tilt:"#ebebeb", nomineeInput:"nominee_white" }
+};
   const scores = { safe:3, likely:2, tilt:1 };
   const defaultFill = getComputedStyle(document.documentElement).getPropertyValue('--default-fill') || '#999999';
 
@@ -427,104 +438,60 @@ document.addEventListener('DOMContentLoaded', () => {
       "New Belgium": "purple.safe",
       "Emporia": "purple.safe",
       "Island Territories": "blue.likely"
-  }
-,
-"December 2025": {
-  parties: {
-    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
-    AUP: { name: "Adizzian Unity Party", color: "#7b3fe4" },
-    CDP: { name: "Civic Democratic Party", color: "#c0392b" },
-    MoA: { name: "Moderates of Adizzia", color: "#90ee90" },
-    IND: { name: "Independent", color: "#f4d03f" }
   },
-  nominees: {
-    ULS: "Jazzy",
-    AUP: "Riri",
-    CDP: "Chester",
-    MoA: "",
-    IND: "Kospii"
-  },
-  results: {
-    Wicsovia: ["ULS","Safe"],
-    Alternat: ["IND","Safe"],
-    NewValencia: ["ULS","Safe"],
-    Odasa: ["CDP","Safe"],
-    Mapsin: ["AUP","Likely"],
-    Alexandria: ["ULS","Safe"],
-    Phosias: ["ULS","Likely"],
-    Wakefield: ["ULS","Tilt"],
-    NewBelgium: ["AUP","Tilt"],
-    Emporia: ["AUP","Likely"],
-    IslandTerritories: ["IND","Tilt"]
-  }
+    "Dec2025": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "yellow.safe",
+      "New Valencia": "blue.safe",
+      "Odasa": "red.safe",
+      "Mapsin": "purple.likely",
+      "Alexandria": "blue.safe",
+      "Phosias": "blue.likely",
+      "Wakefield": "blue.tilt",
+      "New Belgium": "purple.tilt",
+      "Emporia": "purple.likely",
+      "Island Territories": "yellow.tilt"
 },
 
-"January 2026": {
-  parties: {
-    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
-    AUDP: { name: "Adizzian United Democratic Party", color: "#7b3fe4" },
-    AFtS: { name: "ADIZZIA: Flip the Switch", color: "#8B4513" },
-    MoA: { name: "Moderates of Adizzia", color: "#90ee90" },
-    IND: { name: "Independent", color: "#f4d03f" }
-  },
-  nominees: {
-    ULS: "Jazzy",
-    AUDP: "",
-    AFtS: "",
-    MoA: "Blade",
-    IND: ""
-  },
-  results: {
-    Wicsovia: ["ULS","Safe"],
-    Alternat: ["MoA","Tilt"],
-    NewValencia: ["ULS","Safe"],
-    Odasa: ["MoA","Safe"],
-    Mapsin: ["MoA","Likely"],
-    Alexandria: ["ULS","Safe"],
-    Phosias: ["MoA","Safe"],
-    Wakefield: ["ULS","Tilt"],
-    NewBelgium: ["MoA","Safe"],
-    Emporia: ["MoA","Tilt"],
-    IslandTerritories: ["ULS","Likely"]
-  }
+   "Jan2026": {
+      "Wicsovia": "blue.safe",
+      "Alternat": "green.tilt",
+      "New Valencia": "blue.safe",
+      "Odasa": "green.safe",
+      "Mapsin": "green.likely",
+      "Alexandria": "blue.safe",
+      "Phosias": "green.safe",
+      "Wakefield": "blue.tilt",
+      "New Belgium": "green.safe",
+      "Emporia": "green.tilt",
+      "Island Territories": "blue.likely"
 },
 
-"February 2026": {
-  parties: {
-    ULS: { name: "United Liberal Socialists", color: "#1f6bff" },
-    DMoA: { name: "Democratic Moderates of Adizzia", color: "#f39c12" },
-    AFtS: { name: "ADIZZIA: Flip the Switch", color: "#8B4513" },
-    UAP: { name: "United Adizzia Party", color: "#e6e6e6" },
-    IND: { name: "Independent", color: "#f4d03f" }
-  },
-  nominees: {
-    ULS: "Jazzy",
-    DMoA: "",
-    AFtS: "Salted",
-    UAP: "Star",
-    IND: "Idk"
-  },
-  results: {
-    Wicsovia: ["ULS","Tilt"],
-    Alternat: ["UAP","Safe"],
-    NewValencia: ["ULS","Safe"],
-    Odasa: ["ULS","Likely"],
-    Mapsin: ["ULS","Tilt"],
-    Alexandria: ["ULS","Safe"],
-    Phosias: ["AFtS","Safe"],
-    Wakefield: ["AFtS","Tilt"],
-    NewBelgium: ["ULS","Safe"],
-    Emporia: ["UAP","Tilt"],
-    IslandTerritories: ["ULS","Safe"]
-  }
+   "Feb2026": {
+      "Wicsovia": "blue.tilt",
+      "Alternat": "white.safe",
+      "New Valencia": "blue.safe",
+      "Odasa": "blue.likely",
+      "Mapsin": "blue.tilt",
+      "Alexandria": "blue.safe",
+      "Phosias": "brown.safe",
+      "Wakefield": "brown.tilt",
+      "New Belgium": "blue.safe",
+      "Emporia": "white.tilt",
+      "Island Territories": "blue.safe"
 }
+
   };
 
   const partyNameMapping = {
     "Aug2025": { blue:"ALP", purple:"ANP", red:"ACP", yellow:null },
     "Sep2025": { blue:"ALP", purple:"ANP", red:"ACP", yellow:"IND" },
     "Oct2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" },
-    "Nov2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" }
+    "Nov2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" },
+    "Dec2025": { blue:"ULS", purple:"AUP", red:"CDP", yellow:"IND" },
+    "Jan2026": { blue:"ULS", purple:"AUDP", red:null, brown:"AFtS", green:"MoA", yellow:"IND" },
+    "Feb2026": { blue:"ULS", purple:null, red:null, orange:"DMoA", brown:"AFtS", white:"UAP", yellow:"IND"}
+}
   };
 
   const fullNameByAbbrev = {
@@ -534,6 +501,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ULS: "United Liberal Socialists",
     AUP: "Adizzian Unity Party",
     CDP: "Civic Democratic Party",
+    AUDP: "Adizzian United Democratic Party",
+    AFtS: "ADIZZIA: Flip the Switch",
+    MoA: "Moderates of Adizzia",
+    DMoA: "Democratic Moderates of Adizzia",
+    UAP: "United Adizzia Party",
     IND: "Independent"
   };
 
@@ -541,7 +513,10 @@ document.addEventListener('DOMContentLoaded', () => {
     "Aug2025": { blue:"Nebula", purple:"Solar", red:"Kayden", yellow:"" },
     "Sep2025": { blue:"Nebula", purple:"Xaelance", red:"Gendarmerie", yellow:"Display" },
     "Oct2025": { blue:"Jazzy", purple:"Slurps", red:"Chester", yellow:"" },
-    "Nov2025": { blue:"Jazzy", purple:"Xaelance", red:"Solar", yellow:"Minebloxco" }
+    "Nov2025": { blue:"Jazzy", purple:"Xaelance", red:"Solar", yellow:"Minebloxco" },
+    "Dec2025": { blue:"Jazzy", purple:"Riri", red:"Chester", yellow:"Kospii" },
+    "Jan2026": { blue:"Jazzy", purple:"", red:"", green:"Blade", brown:"", yellow:"" },
+    "Feb2026": { blue:"Jazzy", purple:"", red:"", orange:"", brown:"Salted", white:"Star", yellow:"Idk"  }
   };
 
   const labelBlue = $('#label_blue');
@@ -552,6 +527,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const nomineePurple = $('#nominee_purple');
   const nomineeRed = $('#nominee_red');
   const nomineeYellow = $('#nominee_yellow');
+  const nomineeGreen = $('#nominee_green');
+  const nomineePurple = $('#nominee_purple');
+  const nomineeBrown = $('#nominee_brown');
+  const nomineeOrange = $('#nominee_orange');
+  const nomineeWhite = $('#nominee_white');
 
   let selectedColor = null;
   let selectedPaletteEl = null;
@@ -704,6 +684,10 @@ document.addEventListener('DOMContentLoaded', () => {
     labelBlue.textContent = mapping.blue ? `${mapping.blue} Nominee` : 'BLUE Nominee';
     labelPurple.textContent = mapping.purple ? `${mapping.purple} Nominee` : 'PURPLE Nominee';
     labelRed.textContent = mapping.red ? `${mapping.red} Nominee` : 'RED Nominee';
+    labelGreen.textContent = mapping.green ? `${mapping.green} Nominee` : 'GREEN Nominee';
+    labelBrown.textContent = mapping.brown ? `${mapping.brown} Nominee` : 'BROWN Nominee';
+    labelOrange.textContent = mapping.orange ? `${mapping.orange} Nominee` : 'ORANGE Nominee';
+    labelWhite.textContent = mapping.white ? `${mapping.white} Nominee` : 'WHITE Nominee';
 
     if(mapping.yellow){
       document.getElementById('yellowRow').style.display = '';
@@ -715,8 +699,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateResults(){
-    const totals = { blue:0, purple:0, red:0, yellow:0 };
-    const stateCounts = { blue:0, purple:0, red:0, yellow:0 };
+    const totals = { blue:0, purple:0, red:0, green:0, brown:0, orange:0, white:, yellow:0 };
+    const stateCounts = { blue:0, purple:0, red:0, green:0, brown:0, orange:0, white:, yellow:0 };
 
     Object.entries(regionState).forEach(([region, color]) => {
       const ps = hexToPartyShade(color);
@@ -762,6 +746,10 @@ document.addEventListener('DOMContentLoaded', () => {
     nomineeBlue.value = '';
     nomineePurple.value = '';
     nomineeRed.value = '';
+    nomineeGreen.value = '';
+    nomineeBrown.value = '';
+    nomineeOrange.value = '';
+    nomineeWhite.value = '';
     nomineeYellow.value = '';
     if(selectedPaletteEl){ selectedPaletteEl.classList.remove('selected'); selectedPaletteEl = null; selectedColor = null; }
     playTone(440,0.06);
@@ -773,16 +761,28 @@ document.addEventListener('DOMContentLoaded', () => {
     labelBlue.textContent = mapping.blue ? `${mapping.blue} — Nominee` : 'BLUE — Nominee';
     labelPurple.textContent = mapping.purple ? `${mapping.purple} — Nominee` : 'PURPLE — Nominee';
     labelRed.textContent = mapping.red ? `${mapping.red} — Nominee` : 'RED — Nominee';
+    labelGreen.textContent = mapping.green ? `${mapping.green} — Nominee` : 'GREEN — Nominee';
+    labelBrown.textContent = mapping.brown ? `${mapping.brown} — Nominee` : 'BROWN — Nominee';
+    labelOrange.textContent = mapping.orange ? `${mapping.orange} — Nominee` : 'ORANGE — Nominee';
+    labelWhite.textContent = mapping.white ? `${mapping.white} — Nominee` : 'WHITE — Nominee';
     labelYellow.textContent = mapping.yellow ? (mapping.yellow === 'IND' ? 'IND — Nominee' : `${mapping.yellow} — Nominee`) : 'Nominee';
 
     const defaults = leadersByElection[electionKey] || {};
     nomineeBlue.value = defaults.blue || '';
     nomineePurple.value = defaults.purple || '';
     nomineeRed.value = defaults.red || '';
+    nomineeGreen.value = defaults.green || '';
+    nomineeBrown.value = defaults.brown || '';
+    nomineeOrange.value = defaults.orange || '';
+    nomineeWhite.value = defaults.white || '';
     nomineeYellow.value = defaults.yellow || '';
     nomineeBlue.placeholder = mapping.blue ? `${mapping.blue} Nominee` : 'Blue Nominee';
     nomineePurple.placeholder = mapping.purple ? `${mapping.purple} Nominee` : 'Purple Nominee';
     nomineeRed.placeholder = mapping.red ? `${mapping.red} Nominee` : 'Red Nominee';
+    nomineeGreen.placeholder = mapping.green ? `${mapping.green} Nominee` : 'Green Nominee';
+    nomineeBrown.placeholder = mapping.brown ? `${mapping.brown} Nominee` : 'Brown Nominee';
+    nomineeOrange.placeholder = mapping.orange ? `${mapping.orange} Nominee` : 'Orange Nominee';
+    nomineeWhite.placeholder = mapping.white ? `${mapping.white} Nominee` : 'White Nominee';
     nomineeYellow.placeholder = mapping.yellow ? `${mapping.yellow} Nominee` : 'Nominee';
   }
 
